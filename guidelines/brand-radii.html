@@ -1,0 +1,24 @@
+<!-- @dsCard group="Brand" viewport="700x160" name="Corner radii" subtitle="6 / 10 / 16 / 24px + pill" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 24px; background: #fff; font-family: var(--oe-font-body); }
+  .row { display: flex; gap: 18px; align-items: flex-end; }
+  .col { text-align: center; }
+  .box { width: 84px; height: 64px; background: var(--oe-gradient-icon-soft); border: 2px solid var(--oe-blue); }
+  .lbl { font-size: 11px; color: var(--oe-navy); font-weight: 600; margin-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="col"><div class="box" style="border-radius:var(--oe-radius-sm)"></div><div class="lbl">sm · 6px</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--oe-radius)"></div><div class="lbl">base · 10px</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--oe-radius-lg)"></div><div class="lbl">lg · 16px</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--oe-radius-xl)"></div><div class="lbl">xl · 24px</div></div>
+    <div class="col"><div class="box" style="border-radius:var(--oe-radius-pill);width:110px"></div><div class="lbl">pill</div></div>
+  </div>
+</body>
+</html>

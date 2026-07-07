@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Signature gradients" subtitle="Hero, teal band, icon chip" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { padding: 20px; background: #fff; }
+  .row { display: flex; gap: 14px; }
+  .sw { flex: 1; }
+  .chip { height: 80px; border-radius: 12px; box-shadow: var(--oe-shadow-md); }
+  .name { font-family: var(--oe-font-body); font-size: 12px; font-weight: 600; color: var(--oe-navy); margin-top: 8px; }
+  .desc { font-family: var(--oe-font-body); font-size: 11px; color: var(--oe-text-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="sw"><div class="chip" style="background:var(--oe-gradient-hero)"></div><div class="name">Hero / CTA</div><div class="desc">navy → blue → light, 135°</div></div>
+    <div class="sw"><div class="chip" style="background:var(--oe-gradient-teal)"></div><div class="name">Teal band</div><div class="desc">teal-dark → teal</div></div>
+    <div class="sw"><div class="chip" style="background:var(--oe-gradient-icon)"></div><div class="name">Icon chip</div><div class="desc">blue → teal</div></div>
+    <div class="sw"><div class="chip" style="background:var(--oe-gradient-icon-soft);border:1px solid var(--oe-border)"></div><div class="name">Icon chip soft</div><div class="desc">10% blue → 10% teal</div></div>
+  </div>
+</body>
+</html>

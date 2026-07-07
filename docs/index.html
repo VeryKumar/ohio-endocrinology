@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ohio Endocrinology — Expert endocrine care, close to home</title>
+<meta name="description" content="Board-certified endocrinology care in northern Ohio. Diabetes, thyroid, GLP-1 weight management, and more — with same-week appointments.">
+<link rel="icon" href="assets/logo-mark.png">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="vendor/react.production.min.js"></script>
+<script src="vendor/react-dom.production.min.js"></script>
+<script src="_ds_bundle.js"></script>
+<style>
+  body { padding-bottom: 44px; } /* room for the fixed announcement ticker */
+  @keyframes oe-ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { [style*="oe-ticker"] { animation: none !important; } }
+  .oe-map { filter: grayscale(1); }
+  .oe-map:hover { filter: grayscale(0); }
+  @media (max-width: 1100px) {
+    .oe-desktop-nav { display: none !important; }
+    .oe-burger { display: inline-flex !important; }
+  }
+  @media (max-width: 860px) {
+    .oe-desktop-nav { display: none !important; }
+    .oe-burger { display: inline-flex !important; }
+    .oe-hero-grid { grid-template-columns: 1fr !important; }
+    .oe-grid-3 { grid-template-columns: 1fr !important; }
+    .oe-grid-2 { grid-template-columns: 1fr !important; }
+    .oe-footer-grid { grid-template-columns: 1fr 1fr !important; }
+    .oe-form-row { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="js/services-data.js"></script>
+<script src="js/Header.js"></script>
+<script src="js/Footer.js"></script>
+<script src="js/Ticker.js"></script>
+<script src="js/ServiceDetail.js"></script>
+<script src="js/HomePage.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

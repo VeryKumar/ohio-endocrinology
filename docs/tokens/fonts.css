@@ -1,0 +1,7 @@
+/* Ohio Endocrinology — Webfonts
+   Serif display: Playfair Display (600–800 + italic)
+   Body / UI:     Inter (300–800)
+   Loaded from Google Fonts. If self-hosting is required, replace these
+   @import lines with local @font-face rules pointing at binaries in assets/. */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300..800;1,400..600&family=Playfair+Display:ital,wght@0,600..800;1,600..700&display=swap');
