@@ -241,6 +241,110 @@ function Locations() {
   );
 }
 
+const OE_FORM_ENDPOINT = 'https://formsubmit.co/ajax/ohioendocrine@gmail.com';
+
+function AppointmentRequest() {
+  const { SectionHeading, Button, Input, Select, Textarea, HipaaNotice, Alert } = OEHomeNS;
+  const [status, setStatus] = React.useState('idle'); // idle | sending | sent | error
+  const [form, setForm] = React.useState({ name: '', phone: '', email: '', office: '', patientType: '', message: '', _honey: '' });
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const submit = async (e) => {
+    e.preventDefault();
+    if (form._honey) return; // bot honeypot
+    setStatus('sending');
+    try {
+      const res = await fetch(OE_FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: 'Appointment request — ' + form.name,
+          _template: 'table',
+          'Name': form.name,
+          'Phone': form.phone,
+          'Email': form.email || '(not provided)',
+          'Preferred office': form.office || 'No preference',
+          'Patient type': form.patientType || '(not selected)',
+          'Message': form.message || '(none)',
+        }),
+      });
+      if (!res.ok) throw new Error('submit failed: ' + res.status);
+      setStatus('sent');
+    } catch (err) {
+      setStatus('error');
+    }
+  };
+  return (
+    <Section id="appointment">
+      <div style={{ maxWidth: 780, margin: '0 auto' }}>
+        <div style={{ marginBottom: 40 }}>
+          <SectionHeading
+            align="center"
+            eyebrow="Request an Appointment"
+            title="Tell us a little about you"
+            subtitle="Send your details and our team will call you within one business day to find a time that works."
+          />
+        </div>
+        {status === 'sent' ? (
+          <Alert variant="success" title="Request received">
+            Thank you — we&rsquo;ll call you within one business day to confirm your appointment. If you need us sooner, call <a href="tel:+14403220872">{window.OE_PHONE}</a>.
+          </Alert>
+        ) : (
+          <form onSubmit={submit} noValidate={false}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }} className="oe-form-row">
+              <Input label="Full name" required name="name" autoComplete="name" value={form.name} onChange={set('name')} />
+              <Input label="Phone" required type="tel" name="phone" autoComplete="tel" value={form.phone} onChange={set('phone')} hint="We confirm appointments by phone." />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }} className="oe-form-row">
+              <Input label="Email" type="email" name="email" autoComplete="email" value={form.email} onChange={set('email')} hint="Optional." />
+              <Select
+                label="Preferred office"
+                placeholder="No preference"
+                options={['Elyria (primary)', 'Westlake (satellite)', 'Televisit']}
+                value={form.office}
+                onChange={set('office')}
+              />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }} className="oe-form-row">
+              <Select
+                label="Are you a new or returning patient?"
+                placeholder="Please choose"
+                options={['New patient', 'Returning patient']}
+                value={form.patientType}
+                onChange={set('patientType')}
+              />
+              <div />
+            </div>
+            <div style={{ marginBottom: 20 }}>
+              <Textarea
+                label="Anything else we should know?"
+                rows={4}
+                value={form.message}
+                onChange={set('message')}
+                hint="Please don't include specific medical details — we'll cover those at your visit."
+              />
+            </div>
+            {/* honeypot — hidden from people, filled only by bots */}
+            <input type="text" name="_honey" value={form._honey} onChange={set('_honey')} tabIndex={-1} autoComplete="off" style={{ position: 'absolute', left: -9999, height: 0, width: 0, opacity: 0 }} aria-hidden="true" />
+            <div style={{ marginBottom: 24 }}>
+              <HipaaNotice />
+            </div>
+            {status === 'error' && (
+              <div style={{ marginBottom: 20 }}>
+                <Alert variant="error" title="Something went wrong">
+                  Your request couldn&rsquo;t be sent. Please try again, or call us at <a href="tel:+14403220872">{window.OE_PHONE}</a> — we&rsquo;re happy to help.
+                </Alert>
+              </div>
+            )}
+            <Button variant="primary" size="lg" type="submit" fullWidth disabled={status === 'sending'} iconLeft={<i className="fa-solid fa-calendar-check" />}>
+              {status === 'sending' ? 'Sending…' : 'Request Appointment'}
+            </Button>
+          </form>
+        )}
+      </div>
+    </Section>
+  );
+}
+
 function CTA() {
   const { Button } = OEHomeNS;
   return (
@@ -267,6 +371,7 @@ function HomePage({ onNav }) {
       <NewPatients />
       <Voices />
       <Locations />
+      <AppointmentRequest />
       <CTA />
     </div>
   );
