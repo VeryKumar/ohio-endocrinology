@@ -627,7 +627,9 @@ function Locations() {
     }
   }), " ", o.days))))));
 }
-const OE_FORM_ENDPOINT = 'https://formsubmit.co/ajax/ohioendocrine@gmail.com';
+const OE_FORM_ENDPOINT = 'https://api.web3forms.com/submit';
+const OE_FORM_KEY = 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01'; // Web3Forms public access key → delivers to the clinic inbox
+
 function AppointmentRequest() {
   const {
     SectionHeading,
@@ -664,17 +666,20 @@ function AppointmentRequest() {
           Accept: 'application/json'
         },
         body: JSON.stringify({
-          _subject: 'Appointment request — ' + form.name,
-          _template: 'table',
-          'Name': form.name,
-          'Phone': form.phone,
-          'Email': form.email || '(not provided)',
+          access_key: OE_FORM_KEY,
+          subject: 'Appointment request — ' + form.name,
+          from_name: 'Ohio Endocrinology Website',
+          botcheck: form._honey,
+          name: form.name,
+          phone: form.phone,
+          email: form.email || undefined,
           'Preferred office': form.office || 'No preference',
           'Patient type': form.patientType || '(not selected)',
           'Message': form.message || '(none)'
         })
       });
-      if (!res.ok) throw new Error('submit failed: ' + res.status);
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error('submit failed: ' + res.status);
       setStatus('sent');
     } catch (err) {
       setStatus('error');
