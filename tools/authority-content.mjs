@@ -10,7 +10,7 @@ export const PRACTICE = {
   text: '(440) 656-7755',
   fax: '(440) 322-4991',
   portal: 'https://patientportal.glaceemr.com/glaceportal_login/UserRegistration?practiceId=eclinic&requestFor=UserRegistration',
-  domain: 'https://www.ohioendocrinology.com',
+  domain: 'http://www.ohioendocrinology.com',
   elyria: '673 E River St, Elyria, OH 44035',
   westlake: '25200 Center Ridge Rd, Suite 1100, Westlake, OH 44145',
 };
