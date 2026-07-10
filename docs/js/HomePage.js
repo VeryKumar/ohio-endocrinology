@@ -647,6 +647,7 @@ function AppointmentRequest() {
     email: '',
     office: '',
     patientType: '',
+    date: '',
     message: '',
     _honey: ''
   });
@@ -667,12 +668,13 @@ function AppointmentRequest() {
         },
         body: JSON.stringify({
           access_key: OE_FORM_KEY,
-          subject: 'Appointment request — ' + form.name,
+          subject: 'appointment-lead: ' + form.name + ' — ' + (form.patientType || 'type not selected') + ' · ' + (form.date || 'no date given'),
           from_name: 'Ohio Endocrinology Website',
           botcheck: form._honey,
           name: form.name,
           phone: form.phone,
           email: form.email || undefined,
+          'Preferred date': form.date || '(none given)',
           'Preferred office': form.office || 'No preference',
           'Patient type': form.patientType || '(not selected)',
           'Message': form.message || '(none)'
@@ -769,7 +771,13 @@ function AppointmentRequest() {
     options: ['New patient', 'Returning patient'],
     value: form.patientType,
     onChange: set('patientType')
-  }), /*#__PURE__*/React.createElement("div", null)), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement(Input, {
+    label: "Preferred date",
+    type: "date",
+    value: form.date,
+    onChange: set('date'),
+    hint: "Optional \u2014 we'll confirm the exact time by phone."
+  })), /*#__PURE__*/React.createElement("div", {
     style: {
       marginBottom: 20
     }

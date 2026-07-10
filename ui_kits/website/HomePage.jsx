@@ -247,7 +247,7 @@ const OE_FORM_KEY = 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01'; // Web3Forms public 
 function AppointmentRequest() {
   const { SectionHeading, Button, Input, Select, Textarea, HipaaNotice, Alert } = OEHomeNS;
   const [status, setStatus] = React.useState('idle'); // idle | sending | sent | error
-  const [form, setForm] = React.useState({ name: '', phone: '', email: '', office: '', patientType: '', message: '', _honey: '' });
+  const [form, setForm] = React.useState({ name: '', phone: '', email: '', office: '', patientType: '', date: '', message: '', _honey: '' });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const submit = async (e) => {
     e.preventDefault();
@@ -259,12 +259,13 @@ function AppointmentRequest() {
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           access_key: OE_FORM_KEY,
-          subject: 'Appointment request — ' + form.name,
+          subject: 'appointment-lead: ' + form.name + ' — ' + (form.patientType || 'type not selected') + ' · ' + (form.date || 'no date given'),
           from_name: 'Ohio Endocrinology Website',
           botcheck: form._honey,
           name: form.name,
           phone: form.phone,
           email: form.email || undefined,
+          'Preferred date': form.date || '(none given)',
           'Preferred office': form.office || 'No preference',
           'Patient type': form.patientType || '(not selected)',
           'Message': form.message || '(none)',
@@ -316,7 +317,13 @@ function AppointmentRequest() {
                 value={form.patientType}
                 onChange={set('patientType')}
               />
-              <div />
+              <Input
+                label="Preferred date"
+                type="date"
+                value={form.date}
+                onChange={set('date')}
+                hint="Optional — we'll confirm the exact time by phone."
+              />
             </div>
             <div style={{ marginBottom: 20 }}>
               <Textarea
