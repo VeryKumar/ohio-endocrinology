@@ -165,7 +165,13 @@ function Footer() {
     href: "#newpatients"
   }, "New Patients"), /*#__PURE__*/React.createElement(FooterLink, {
     href: "#testimonials"
-  }, "Testimonials")), /*#__PURE__*/React.createElement(FooterCol, {
+  }, "Testimonials"), /*#__PURE__*/React.createElement(FooterLink, {
+    href: "conditions/"
+  }, "Conditions We Treat"), /*#__PURE__*/React.createElement(FooterLink, {
+    href: "treatments/"
+  }, "Treatments & Services"), /*#__PURE__*/React.createElement(FooterLink, {
+    href: "locations/"
+  }, "Areas We Serve")), /*#__PURE__*/React.createElement(FooterCol, {
     title: "Contact"
   }, /*#__PURE__*/React.createElement("span", {
     style: {
