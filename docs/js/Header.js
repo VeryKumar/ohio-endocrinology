@@ -33,11 +33,13 @@ function Topbar() {
   }, /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      gap: 22,
+      gap: '4px 22px',
       flexWrap: 'wrap',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "oe-topbar-extra"
+  }, /*#__PURE__*/React.createElement("i", {
     className: "fa-solid fa-location-dot",
     style: {
       color: 'var(--oe-teal)',
@@ -52,11 +54,13 @@ function Topbar() {
   }), "HIPAA-compliant & encrypted")), /*#__PURE__*/React.createElement("div", {
     style: {
       display: 'flex',
-      gap: 22,
+      gap: '4px 22px',
       flexWrap: 'wrap',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement("i", {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "oe-topbar-extra"
+  }, /*#__PURE__*/React.createElement("i", {
     className: "fa-solid fa-comment-sms",
     style: {
       color: 'var(--oe-teal)',
@@ -118,6 +122,7 @@ function Header({
       boxShadow: 'var(--oe-shadow-sm)'
     }
   }, /*#__PURE__*/React.createElement(Topbar, null), /*#__PURE__*/React.createElement("div", {
+    className: "oe-header-row",
     style: {
       maxWidth: 'var(--oe-container)',
       margin: '0 auto',
@@ -159,6 +164,7 @@ function Header({
       lineHeight: 1.1
     }
   }, "Ohio Endocrinology"), /*#__PURE__*/React.createElement("span", {
+    className: "oe-brand-sub",
     style: {
       display: 'block',
       fontSize: '0.64rem',

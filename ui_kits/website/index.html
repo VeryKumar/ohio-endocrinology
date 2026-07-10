@@ -22,6 +22,12 @@
     .oe-desktop-nav { display: none !important; }
     .oe-burger { display: inline-flex !important; }
   }
+  @media (max-width: 700px) {
+    /* slim mobile header: drop street address + SMS line, keep HIPAA badge + phone */
+    .oe-topbar-extra { display: none !important; }
+    .oe-header-row { height: 70px !important; }
+    .oe-brand-sub { max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  }
   @media (max-width: 860px) {
     .oe-desktop-nav { display: none !important; }
     .oe-burger { display: inline-flex !important; }

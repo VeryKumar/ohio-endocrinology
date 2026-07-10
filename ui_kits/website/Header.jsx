@@ -12,12 +12,12 @@ function Topbar() {
   return (
     <div style={{ background: 'var(--oe-navy)', color: 'rgba(255,255,255,0.82)', fontSize: '0.775rem', padding: '9px 0' }}>
       <div style={{ maxWidth: 'var(--oe-container)', margin: '0 auto', padding: '0 var(--oe-container-pad)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: '6px 22px', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'center' }}>
-          <span><i className="fa-solid fa-location-dot" style={{ color: 'var(--oe-teal)', marginRight: 6 }} />673 E River St, Elyria, OH 44035</span>
+        <div style={{ display: 'flex', gap: '4px 22px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span className="oe-topbar-extra"><i className="fa-solid fa-location-dot" style={{ color: 'var(--oe-teal)', marginRight: 6 }} />673 E River St, Elyria, OH 44035</span>
           <span><i className="fa-solid fa-shield-halved" style={{ color: 'var(--oe-teal)', marginRight: 6 }} />HIPAA-compliant &amp; encrypted</span>
         </div>
-        <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap', alignItems: 'center' }}>
-          <span><i className="fa-solid fa-comment-sms" style={{ color: 'var(--oe-teal)', marginRight: 6 }} />Text {OE_TEXT}</span>
+        <div style={{ display: 'flex', gap: '4px 22px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span className="oe-topbar-extra"><i className="fa-solid fa-comment-sms" style={{ color: 'var(--oe-teal)', marginRight: 6 }} />Text {OE_TEXT}</span>
           <a href="tel:+14403220872" style={{ color: 'var(--oe-teal)', fontWeight: 700, textDecoration: 'none' }}>
             <i className="fa-solid fa-phone" style={{ marginRight: 6 }} />{OE_PHONE}
           </a>
@@ -48,12 +48,12 @@ function Header({ current, onNav }) {
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 'var(--oe-z-header)', background: '#fff', boxShadow: 'var(--oe-shadow-sm)' }}>
       <Topbar />
-      <div style={{ maxWidth: 'var(--oe-container)', margin: '0 auto', padding: '0 var(--oe-container-pad)', height: 90, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
+      <div className="oe-header-row" style={{ maxWidth: 'var(--oe-container)', margin: '0 auto', padding: '0 var(--oe-container-pad)', height: 90, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         <a href="#home" onClick={(e) => { e.preventDefault(); onNav('home'); }} style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
           <img src={OE_LOGO} alt="Ohio Endocrinology" style={{ width: 44, height: 44, borderRadius: 10, display: 'block' }} />
           <span>
             <span style={{ display: 'block', fontFamily: 'var(--oe-font-display)', fontWeight: 700, fontSize: '1.2rem', color: 'var(--oe-navy)', lineHeight: 1.1 }}>Ohio Endocrinology</span>
-            <span style={{ display: 'block', fontSize: '0.64rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--oe-text-muted)', fontWeight: 600 }}>Diabetes, Thyroid &amp; Endocrinology of N. Ohio</span>
+            <span className="oe-brand-sub" style={{ display: 'block', fontSize: '0.64rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--oe-text-muted)', fontWeight: 600 }}>Diabetes, Thyroid &amp; Endocrinology of N. Ohio</span>
           </span>
         </a>
         <nav className="oe-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
