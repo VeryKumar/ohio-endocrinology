@@ -35,7 +35,7 @@ function Hero() {
             Diabetes, Thyroid &amp; Endocrinology of Northern Ohio &mdash; making your diabetes management simple, with convenient offices in Elyria and Westlake near University Hospitals Elyria and Cleveland Clinic Fairview.
           </p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 34 }}>
-            <Button variant="teal" size="lg" href={window.OE_PORTAL} target="_blank" rel="noopener" iconLeft={<i className="fa-solid fa-calendar-check" />}>Book Appointment</Button>
+            <Button variant="teal" size="lg" href="#appointment" onClick={(e) => { e.preventDefault(); window.OENav && window.OENav('appointment'); }} iconLeft={<i className="fa-solid fa-calendar-check" />}>Request Appointment</Button>
             <Button variant="outline-white" size="lg" href="tel:+14403220872" iconLeft={<i className="fa-solid fa-phone" />}>{window.OE_PHONE}</Button>
           </div>
           <div style={{ display: 'flex', gap: 26, flexWrap: 'wrap', paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.14)' }}>
@@ -160,6 +160,9 @@ function NewPatients() {
             <Button variant="primary" href={window.OE_PORTAL} target="_blank" rel="noopener" iconLeft={<i className="fa-solid fa-user-plus" />}>Register on the Portal</Button>
             <Button variant="outline" href="tel:+14403220872" iconLeft={<i className="fa-solid fa-phone" />}>Call {window.OE_PHONE}</Button>
           </div>
+          <p style={{ fontSize: '0.9rem', marginTop: 14 }}>
+            Registering takes about 10 minutes — <a href="portal-help/">see what you'll need before you start</a>. Prefer we handle it? <a href="#appointment" onClick={(e) => { e.preventDefault(); window.OENav && window.OENav('appointment'); }}>Send an appointment request</a> and we'll walk you through everything by phone.
+          </p>
         </div>
         <Alert variant="warning" title="Cancellation policy">
           To avoid a $50 fee, please notify us at least 24 hours before your appointment to cancel or reschedule.
@@ -364,7 +367,7 @@ function CTA() {
         <h2 style={{ color: '#fff', marginBottom: 16 }}>Ready to take control of your health?</h2>
         <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.125rem', marginBottom: 28 }}>Register online through our secure patient portal, or call — we&rsquo;re here to help.</p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Button variant="outline-white" size="lg" href={window.OE_PORTAL} target="_blank" rel="noopener">Book Appointment</Button>
+          <Button variant="outline-white" size="lg" href="#appointment" onClick={(e) => { e.preventDefault(); window.OENav && window.OENav('appointment'); }}>Request Appointment</Button>
           <Button variant="gold" size="lg" href="tel:+14403220872" iconLeft={<i className="fa-solid fa-phone" />}>Call {window.OE_PHONE}</Button>
         </div>
       </div>

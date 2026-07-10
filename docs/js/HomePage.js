@@ -96,13 +96,15 @@ function Hero() {
   }, /*#__PURE__*/React.createElement(Button, {
     variant: "teal",
     size: "lg",
-    href: window.OE_PORTAL,
-    target: "_blank",
-    rel: "noopener",
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      window.OENav && window.OENav('appointment');
+    },
     iconLeft: /*#__PURE__*/React.createElement("i", {
       className: "fa-solid fa-calendar-check"
     })
-  }, "Book Appointment"), /*#__PURE__*/React.createElement(Button, {
+  }, "Request Appointment"), /*#__PURE__*/React.createElement(Button, {
     variant: "outline-white",
     size: "lg",
     href: "tel:+14403220872",
@@ -433,7 +435,20 @@ function NewPatients() {
     iconLeft: /*#__PURE__*/React.createElement("i", {
       className: "fa-solid fa-phone"
     })
-  }, "Call ", window.OE_PHONE))), /*#__PURE__*/React.createElement(Alert, {
+  }, "Call ", window.OE_PHONE)), /*#__PURE__*/React.createElement("p", {
+    style: {
+      fontSize: '0.9rem',
+      marginTop: 14
+    }
+  }, "Registering takes about 10 minutes \u2014 ", /*#__PURE__*/React.createElement("a", {
+    href: "portal-help/"
+  }, "see what you'll need before you start"), ". Prefer we handle it? ", /*#__PURE__*/React.createElement("a", {
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      window.OENav && window.OENav('appointment');
+    }
+  }, "Send an appointment request"), " and we'll walk you through everything by phone.")), /*#__PURE__*/React.createElement(Alert, {
     variant: "warning",
     title: "Cancellation policy"
   }, "To avoid a $50 fee, please notify us at least 24 hours before your appointment to cancel or reschedule.")));
@@ -864,10 +879,12 @@ function CTA() {
   }, /*#__PURE__*/React.createElement(Button, {
     variant: "outline-white",
     size: "lg",
-    href: window.OE_PORTAL,
-    target: "_blank",
-    rel: "noopener"
-  }, "Book Appointment"), /*#__PURE__*/React.createElement(Button, {
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      window.OENav && window.OENav('appointment');
+    }
+  }, "Request Appointment"), /*#__PURE__*/React.createElement(Button, {
     variant: "gold",
     size: "lg",
     href: "tel:+14403220872",

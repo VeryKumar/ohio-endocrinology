@@ -36,7 +36,7 @@ function ServiceDetail({ slug, onNav }) {
             <h1 style={{ color: '#fff', marginBottom: 18 }}>{s.title}</h1>
             <p style={{ color: 'rgba(255,255,255,0.85)', fontSize: '1.1875rem', lineHeight: 1.6, maxWidth: 560, marginBottom: 30 }}>{s.subtitle}</p>
             <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              <Button variant="teal" size="lg" href={window.OE_PORTAL} target="_blank" rel="noopener" iconLeft={<i className="fa-solid fa-calendar-check" />}>Book Appointment</Button>
+              <Button variant="teal" size="lg" href="#appointment" onClick={(e) => { e.preventDefault(); window.OENav && window.OENav('appointment'); }} iconLeft={<i className="fa-solid fa-calendar-check" />}>Request Appointment</Button>
               <Button variant="outline-white" size="lg" href="tel:+14403220872" iconLeft={<i className="fa-solid fa-phone" />}>{window.OE_PHONE}</Button>
             </div>
           </div>

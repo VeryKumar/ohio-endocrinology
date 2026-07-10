@@ -58,7 +58,7 @@ function Header({ current, onNav }) {
         </a>
         <nav className="oe-desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           {links.map(([k, l]) => navLink(k, l))}
-          <Button variant="primary" size="sm" href={OE_PORTAL} target="_blank" rel="noopener" style={{ marginLeft: 10 }} iconLeft={<i className="fa-solid fa-calendar-check" />}>Book Appointment</Button>
+          <Button variant="primary" size="sm" href="#appointment" onClick={(e) => { e.preventDefault(); window.OENav && window.OENav('appointment'); }} style={{ marginLeft: 10 }} iconLeft={<i className="fa-solid fa-calendar-check" />}>Request Appointment</Button>
         </nav>
         <button className="oe-burger" aria-label="Menu" onClick={() => setOpen(!open)}
           style={{ display: 'none', width: 48, height: 48, border: 'none', background: 'transparent', fontSize: '1.4rem', color: 'var(--oe-navy)', cursor: 'pointer' }}>
@@ -68,7 +68,7 @@ function Header({ current, onNav }) {
       {open && (
         <div style={{ borderTop: '1px solid var(--oe-border)', padding: 'var(--oe-sp-4) var(--oe-container-pad)', display: 'flex', flexDirection: 'column', gap: 4 }}>
           {links.map(([k, l]) => navLink(k, l))}
-          <Button variant="primary" fullWidth href={OE_PORTAL} target="_blank" rel="noopener" style={{ marginTop: 8 }}>Book Appointment</Button>
+          <Button variant="primary" fullWidth href="#appointment" onClick={(e) => { e.preventDefault(); setOpen(false); window.OENav && window.OENav('appointment'); }} style={{ marginTop: 8 }}>Request Appointment</Button>
         </div>
       )}
     </header>

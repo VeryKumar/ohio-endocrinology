@@ -183,16 +183,18 @@ function Header({
   }, links.map(([k, l]) => navLink(k, l)), /*#__PURE__*/React.createElement(Button, {
     variant: "primary",
     size: "sm",
-    href: OE_PORTAL,
-    target: "_blank",
-    rel: "noopener",
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      window.OENav && window.OENav('appointment');
+    },
     style: {
       marginLeft: 10
     },
     iconLeft: /*#__PURE__*/React.createElement("i", {
       className: "fa-solid fa-calendar-check"
     })
-  }, "Book Appointment")), /*#__PURE__*/React.createElement("button", {
+  }, "Request Appointment")), /*#__PURE__*/React.createElement("button", {
     className: "oe-burger",
     "aria-label": "Menu",
     onClick: () => setOpen(!open),
@@ -219,12 +221,15 @@ function Header({
   }, links.map(([k, l]) => navLink(k, l)), /*#__PURE__*/React.createElement(Button, {
     variant: "primary",
     fullWidth: true,
-    href: OE_PORTAL,
-    target: "_blank",
-    rel: "noopener",
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      setOpen(false);
+      window.OENav && window.OENav('appointment');
+    },
     style: {
       marginTop: 8
     }
-  }, "Book Appointment")));
+  }, "Request Appointment")));
 }
 window.OEHeader = Header;

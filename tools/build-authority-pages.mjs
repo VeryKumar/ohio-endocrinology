@@ -397,8 +397,60 @@ hub('locations', 'Areas We Serve', 'Ohio Endocrinology serves Elyria, Westlake, 
   'Areas we serve', 'Two offices — Elyria and Westlake — plus secure televisits for patients anywhere in Ohio.',
   [{ h2: 'Communities we serve', items: LOCATIONS.map((l) => `locations/${l.slug}`) }]);
 
+// ---- portal registration guide ----
+{
+  const path = 'portal-help';
+  const steps = [
+    ['1 · About you', 'fa-user', 'Your legal name, date of birth, and gender — exactly as they appear on your insurance card.'],
+    ['2 · Contact details', 'fa-address-book', 'Home address, the phone numbers you use (home / cell / work), and an email address you check regularly — appointment updates go there.'],
+    ['3 · Your account', 'fa-key', 'Pick a username and password, and answer three security questions. Jot your choices down somewhere safe before you start — this is the step where most people get stuck on a later visit.'],
+    ['4 · Insurance', 'fa-id-card', 'Have your insurance card in hand: the plan name, member ID, and the policy holder’s name (if the plan is in someone else’s name). Self-pay? Just say so — there’s a checkbox for that.'],
+    ['5 · Health basics', 'fa-pills', 'Your current medications (names and doses), your preferred pharmacy, and your referring doctor’s name if you have one. A photo of your medication bottles works great as a cheat sheet.'],
+    ['6 · Verify & submit', 'fa-check-double', 'Type the verification code shown on screen and submit. You’ll use your new username and password to sign in from then on.'],
+  ];
+  const stepsHtml = steps.map(([t, ic, d]) => `<div class="card" style="text-align:left"><div class="ic" style="margin:0 0 12px"><i class="fa-solid ${ic}"></i></div><h3>${t}</h3><p>${d}</p></div>`).join('');
+  const faqs = [
+    { q: 'Do I have to register on the portal to become a patient?', a: `No. If you'd rather not, send an appointment request on our homepage or call ${P.phone} — our team will take your details by phone and help you get set up.` },
+    { q: 'How long does registration take?', a: 'About 10 minutes if you have your insurance card and medication list in front of you — that preparation is most of the battle.' },
+    { q: 'What if I get stuck partway through?', a: `Call us at ${P.phone} and we'll walk you through it — or just skip the portal and let us handle registration with you by phone.` },
+    { q: 'I already registered but forgot my username or password.', a: 'Use the "Forgot password" link on the portal sign-in page, or call the office and we’ll help you reset it.' },
+  ];
+  const body = `
+<section><div class="oe-wrap">
+  <p style="font-size:1.05rem">Our patient portal registration asks for a fair amount of information — six steps' worth. The good news: with the right things in front of you, it takes about ten minutes, one pass, done. This page shows you exactly what each step asks for, so nothing catches you off guard.</p>
+  <p><strong>Rather skip it entirely?</strong> <a href="../#appointment">Send us an appointment request</a> and we'll call you within one business day — we can take care of registration together on that call.</p>
+</div></section>
+<section class="alt"><div class="oe-wrap oe-center">
+  <h2>Before you start, gather these</h2>
+  <p class="oe-sub">Five minutes of gathering saves twenty minutes of hunting mid-form.</p>
+  <div class="oe-why" style="text-align:left">
+    <div class="card"><div class="ic"><i class="fa-solid fa-id-card"></i></div><h3>Insurance card</h3><p>Plan name, member ID, and the policy holder's name — front and back of the card has everything.</p></div>
+    <div class="card"><div class="ic"><i class="fa-solid fa-pills"></i></div><h3>Medication list</h3><p>Names and doses of what you take. A photo of the bottles counts.</p></div>
+    <div class="card"><div class="ic"><i class="fa-solid fa-pen"></i></div><h3>Username &amp; password</h3><p>Decide them ahead of time, plus answers to three security questions — and write them down.</p></div>
+  </div>
+</div></section>
+<section><div class="oe-wrap oe-center">
+  <h2>The six steps, decoded</h2>
+  <p class="oe-sub">What the portal will ask for, in order.</p>
+  <div class="oe-why" style="text-align:left">${stepsHtml}</div>
+  <div style="margin-top:30px"><a class="oe-btn oe-btn-primary" href="${P.portal}" rel="noopener" target="_blank">Start portal registration</a></div>
+</div></section>` + faqHtml(faqs);
+  writePage(path, page({
+    path,
+    title: 'Patient Portal Registration Guide',
+    metaDesc: 'Registering on the Ohio Endocrinology patient portal? Here’s exactly what each of the six steps asks for and what to have ready — or let us handle it by phone.',
+    eyebrow: 'New Patients',
+    h1: 'Portal registration, without the guesswork',
+    heroSub: 'What to have ready for each of the six registration steps — or skip the form and let our team register you by phone.',
+    crumbs: [{ label: 'Home', href: '../' }, { label: 'Portal Registration Guide' }],
+    bodyHtml: body,
+    faqs,
+    heroExtras: false,
+  }).replaceAll('../../', '../'));
+}
+
 // ---- sitemap.xml & robots.txt ----
-const urls = ['', 'conditions/', 'treatments/', 'locations/',
+const urls = ['', 'conditions/', 'treatments/', 'locations/', 'portal-help/',
   ...CONDITIONS.map((c) => `conditions/${c.slug}/`),
   ...TREATMENTS.map((t) => `treatments/${t.slug}/`),
   ...LOCATIONS.map((l) => `locations/${l.slug}/`)];

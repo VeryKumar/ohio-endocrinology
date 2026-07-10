@@ -113,13 +113,15 @@ function ServiceDetail({
   }, /*#__PURE__*/React.createElement(Button, {
     variant: "teal",
     size: "lg",
-    href: window.OE_PORTAL,
-    target: "_blank",
-    rel: "noopener",
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      window.OENav && window.OENav('appointment');
+    },
     iconLeft: /*#__PURE__*/React.createElement("i", {
       className: "fa-solid fa-calendar-check"
     })
-  }, "Book Appointment"), /*#__PURE__*/React.createElement(Button, {
+  }, "Request Appointment"), /*#__PURE__*/React.createElement(Button, {
     variant: "outline-white",
     size: "lg",
     href: "tel:+14403220872",

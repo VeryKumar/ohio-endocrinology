@@ -32,6 +32,11 @@ function App() {
       scrollToSection();
     }
   };
+  window.OENav = nav;
+  React.useEffect(() => {
+    const h = (window.location.hash || '').slice(1);
+    if (h) setTimeout(() => nav(h), 150);
+  }, []);
   const isService = current && current.indexOf('service:') === 0;
   const headerCur = isService ? 'services' : current;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("a", {

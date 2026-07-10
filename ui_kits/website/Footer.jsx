@@ -12,7 +12,7 @@ function ContactStrip() {
           <div style={{ fontSize: '0.85rem', color: 'var(--oe-text-muted)', marginTop: 2 }}>Or text us at {window.OE_TEXT}</div>
         </div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <Button variant="primary" href={window.OE_PORTAL} target="_blank" rel="noopener" iconLeft={<i className="fa-solid fa-calendar-check" />}>Book Appointment</Button>
+          <Button variant="primary" href="#appointment" onClick={(e) => { e.preventDefault(); window.OENav && window.OENav('appointment'); }} iconLeft={<i className="fa-solid fa-calendar-check" />}>Request Appointment</Button>
           <Button variant="outline" href="#contact" iconLeft={<i className="fa-solid fa-location-dot" />}>Find an Office</Button>
         </div>
       </div>
@@ -50,7 +50,7 @@ function Footer() {
             <FooterLink href="#services">Diabetes Management</FooterLink><FooterLink href="#services">Insulin Pumps &amp; CGM</FooterLink><FooterLink href="#services">Hormone &amp; Endocrine</FooterLink><FooterLink href="#services">In-house A1C</FooterLink>
           </FooterCol>
           <FooterCol title="Patients">
-            <FooterLink href={window.OE_PORTAL}>Patient Portal</FooterLink><FooterLink href="#newpatients">New Patients</FooterLink><FooterLink href="#testimonials">Testimonials</FooterLink><FooterLink href="conditions/">Conditions We Treat</FooterLink><FooterLink href="treatments/">Treatments &amp; Services</FooterLink><FooterLink href="locations/">Areas We Serve</FooterLink>
+            <FooterLink href={window.OE_PORTAL}>Patient Portal</FooterLink><FooterLink href="portal-help/">Portal Registration Guide</FooterLink><FooterLink href="#newpatients">New Patients</FooterLink><FooterLink href="#testimonials">Testimonials</FooterLink><FooterLink href="conditions/">Conditions We Treat</FooterLink><FooterLink href="treatments/">Treatments &amp; Services</FooterLink><FooterLink href="locations/">Areas We Serve</FooterLink>
           </FooterCol>
           <FooterCol title="Contact">
             <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.9rem' }}><i className="fa-solid fa-phone" style={{ color: 'var(--oe-teal)', width: 18 }} /> {window.OE_PHONE}</span>

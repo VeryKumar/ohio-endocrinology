@@ -51,13 +51,15 @@ function ContactStrip() {
     }
   }, /*#__PURE__*/React.createElement(Button, {
     variant: "primary",
-    href: window.OE_PORTAL,
-    target: "_blank",
-    rel: "noopener",
+    href: "#appointment",
+    onClick: e => {
+      e.preventDefault();
+      window.OENav && window.OENav('appointment');
+    },
     iconLeft: /*#__PURE__*/React.createElement("i", {
       className: "fa-solid fa-calendar-check"
     })
-  }, "Book Appointment"), /*#__PURE__*/React.createElement(Button, {
+  }, "Request Appointment"), /*#__PURE__*/React.createElement(Button, {
     variant: "outline",
     href: "#contact",
     iconLeft: /*#__PURE__*/React.createElement("i", {
@@ -162,6 +164,8 @@ function Footer() {
   }, /*#__PURE__*/React.createElement(FooterLink, {
     href: window.OE_PORTAL
   }, "Patient Portal"), /*#__PURE__*/React.createElement(FooterLink, {
+    href: "portal-help/"
+  }, "Portal Registration Guide"), /*#__PURE__*/React.createElement(FooterLink, {
     href: "#newpatients"
   }, "New Patients"), /*#__PURE__*/React.createElement(FooterLink, {
     href: "#testimonials"
