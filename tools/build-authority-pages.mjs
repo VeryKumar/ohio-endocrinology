@@ -11,6 +11,25 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'docs');
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// Font Awesome icon per page, used on related-care cards and hero chips.
+const ICONS = {
+  'conditions/type-2-diabetes': 'fa-droplet',
+  'conditions/type-1-diabetes': 'fa-syringe',
+  'conditions/prediabetes': 'fa-chart-line',
+  'conditions/hypothyroidism': 'fa-gauge-simple',
+  'conditions/hyperthyroidism': 'fa-gauge-high',
+  'conditions/thyroid-nodules': 'fa-magnifying-glass',
+  'conditions/hashimotos-thyroiditis': 'fa-shield-halved',
+  'conditions/graves-disease': 'fa-eye',
+  'conditions/pcos': 'fa-venus',
+  'conditions/osteoporosis': 'fa-bone',
+  'treatments/glp-1-weight-management': 'fa-weight-scale',
+  'treatments/insulin-pump-therapy': 'fa-microchip',
+  'treatments/continuous-glucose-monitoring': 'fa-wave-square',
+  'treatments/in-house-a1c-testing': 'fa-vial',
+  'treatments/telehealth-endocrinology': 'fa-video',
+};
+
 const CLINIC_LD = {
   '@context': 'https://schema.org',
   '@type': 'MedicalClinic',
@@ -25,9 +44,16 @@ const CLINIC_LD = {
   ],
 };
 
+// Verbatim patient testimonials from the practice's site (shown as verified patients).
+const TESTIMONIALS = [
+  'My experience with the office was a great one. There was no wait for my appointment and the physician assistant was very thorough and friendly. They are awesome and I love that I can do televisits anytime!',
+  'Dr. Kumar and his PA, Nam, are an awesome team! Together the two of them got my blood sugars on track!',
+  'They saved my life as far as I’m concerned. By adjusting my medication and explaining everything, I feel better than I have in years about my diabetes.',
+];
+
 const CSS = `
   body { background: #fff; }
-  .oe-wrap { max-width: 880px; margin: 0 auto; padding: 0 var(--oe-container-pad); }
+  .oe-wrap { max-width: 960px; margin: 0 auto; padding: 0 var(--oe-container-pad); }
   .oe-topnav { position: sticky; top: 0; z-index: 100; background: #fff; box-shadow: var(--oe-shadow-sm); }
   .oe-topnav-in { max-width: var(--oe-container); margin: 0 auto; padding: 0 var(--oe-container-pad); height: 70px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
   .oe-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
@@ -41,7 +67,7 @@ const CSS = `
   .oe-btn-primary:hover { background: var(--oe-navy); color: #fff; }
   .oe-btn-white { background: transparent; color: #fff; border-color: rgba(255,255,255,0.65); }
   .oe-btn-white:hover { background: #fff; color: var(--oe-navy); }
-  .oe-hero { background: linear-gradient(135deg, #0a2543 0%, #0d2d4e 45%, #123a63 100%); color: #fff; padding: clamp(3rem,7vw,4.5rem) 0; }
+  .oe-hero { background: radial-gradient(120% 90% at 85% 15%, rgba(0,180,166,0.25) 0%, rgba(0,180,166,0) 55%), linear-gradient(135deg, #0a2543 0%, #0d2d4e 45%, #123a63 100%); color: #fff; padding: clamp(3rem,7vw,4.5rem) 0; }
   .oe-eyebrow { display: inline-flex; align-items: center; gap: 10px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--oe-teal); margin-bottom: 16px; }
   .oe-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--oe-teal); }
   .oe-hero h1 { color: #fff; font-size: clamp(1.9rem, 4.5vw, 2.9rem); margin: 0 0 14px; }
@@ -49,22 +75,43 @@ const CSS = `
   .oe-crumbs { font-size: 0.8rem; color: rgba(255,255,255,0.62); margin-bottom: 20px; }
   .oe-crumbs a { color: rgba(255,255,255,0.75); text-decoration: none; }
   .oe-crumbs a:hover { color: #fff; }
+  .oe-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+  .oe-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: var(--oe-radius-pill); background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.92); font-size: 0.85rem; font-weight: 600; }
+  .oe-chip i { color: var(--oe-teal); }
+  .oe-trustrow { display: flex; flex-wrap: wrap; gap: 12px 26px; margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.16); font-size: 0.9rem; color: rgba(255,255,255,0.88); }
+  .oe-trustrow span { display: inline-flex; align-items: center; gap: 8px; }
+  .oe-trustrow i { color: var(--oe-teal); }
+  .oe-trustrow .gold { color: var(--oe-gold-light, #e8b84b); }
   main section { padding: clamp(2.2rem,5vw,3.2rem) 0; }
   main section.alt { background: var(--oe-surface-offwhite, #f7f9fc); }
   main h2 { font-size: clamp(1.35rem,3vw,1.7rem); margin-bottom: 14px; }
   main p { margin-bottom: 14px; line-height: 1.75; color: #1e293b; }
+  .oe-center { text-align: center; }
+  .oe-sub { color: var(--oe-text-muted); max-width: 620px; margin: 0 auto 30px; }
+  .oe-why { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .oe-why .card { background: #fff; border: 1px solid var(--oe-border, #e2e8f0); border-radius: 16px; padding: 26px 22px; text-align: center; box-shadow: var(--oe-shadow-card); border-top: 4px solid transparent; border-image: linear-gradient(90deg, var(--oe-blue), var(--oe-teal)) 1; border-top-left-radius: 16px; }
+  .oe-why .ic { width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 14px; background: linear-gradient(135deg, var(--oe-blue), var(--oe-teal)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.35rem; }
+  .oe-why h3 { font-size: 1.08rem; margin-bottom: 8px; color: var(--oe-navy); }
+  .oe-why p { font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.65; }
+  .oe-quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .oe-quotes .card { background: #fff; border: 1px solid var(--oe-border, #e2e8f0); border-left: 4px solid var(--oe-teal); border-radius: 14px; padding: 22px; box-shadow: var(--oe-shadow-card); }
+  .oe-quotes .stars { color: var(--oe-gold-light, #e8b84b); letter-spacing: 3px; margin-bottom: 10px; font-size: 0.95rem; }
+  .oe-quotes blockquote { margin: 0 0 12px; font-style: italic; color: #334155; line-height: 1.7; font-size: 0.93rem; }
+  .oe-quotes .who { font-weight: 700; color: var(--oe-navy); font-size: 0.85rem; }
   .oe-faq details { background: #fff; border: 1px solid var(--oe-border, #e2e8f0); border-radius: 12px; margin-bottom: 10px; box-shadow: var(--oe-shadow-card); }
   .oe-faq summary { cursor: pointer; font-weight: 600; color: var(--oe-navy); padding: 16px 18px; list-style: none; display: flex; justify-content: space-between; gap: 12px; min-height: 48px; align-items: center; }
   .oe-faq summary::after { content: '▾'; color: var(--oe-teal); }
   .oe-faq details[open] summary::after { content: '▴'; }
   .oe-faq details > div { padding: 0 18px 16px; color: #334155; line-height: 1.7; }
-  .oe-related { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
-  .oe-related a { display: block; background: #fff; border: 1px solid var(--oe-border, #e2e8f0); border-radius: 12px; padding: 16px 18px; text-decoration: none; color: var(--oe-navy); font-weight: 600; font-size: 0.95rem; box-shadow: var(--oe-shadow-card); transition: all var(--oe-transition); }
+  .oe-related { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .oe-related a { display: block; background: #fff; border: 1px solid var(--oe-border, #e2e8f0); border-radius: 14px; padding: 20px; text-decoration: none; color: var(--oe-navy); font-weight: 600; font-size: 0.95rem; box-shadow: var(--oe-shadow-card); transition: all var(--oe-transition); }
   .oe-related a:hover { transform: translateY(-4px); box-shadow: var(--oe-shadow-lg); }
+  .oe-related .ric { width: 46px; height: 46px; border-radius: 12px; background: linear-gradient(135deg, rgba(30,95,168,0.10), rgba(0,180,166,0.10)); color: var(--oe-blue); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 12px; }
   .oe-related a span { display: block; margin-top: 6px; color: var(--oe-text-muted); font-weight: 400; font-size: 0.82rem; }
   .oe-cta { background: linear-gradient(135deg, #00958a 0%, #00b4a6 100%); color: #fff; text-align: center; }
   .oe-cta h2 { color: #fff; }
   .oe-cta p { color: rgba(255,255,255,0.92); }
+  .oe-cta .oe-trustrow { justify-content: center; border-top-color: rgba(255,255,255,0.25); }
   .oe-note { font-size: 0.82rem; color: var(--oe-text-muted); border-top: 1px solid var(--oe-border, #e2e8f0); padding-top: 16px; }
   footer.oe-foot { background: var(--oe-navy); color: rgba(255,255,255,0.75); font-size: 0.88rem; padding: 36px 0; }
   footer.oe-foot a { color: rgba(255,255,255,0.85); }
@@ -72,7 +119,50 @@ const CSS = `
   @media (max-width: 640px) { .oe-navlinks a.plain { display: none; } }
 `;
 
-function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, faqs, ldExtra }) {
+const HERO_CHIPS = `
+<div class="oe-chips">
+  <span class="oe-chip"><i class="fa-solid fa-location-dot"></i>Elyria &amp; Westlake offices</span>
+  <span class="oe-chip"><i class="fa-solid fa-video"></i>Televisits across Ohio</span>
+  <span class="oe-chip"><i class="fa-solid fa-user-plus"></i>New patients welcome</span>
+</div>`;
+
+const HERO_TRUST = `
+<div class="oe-trustrow">
+  <span><i class="fa-solid fa-award"></i>Board-certified endocrine care</span>
+  <span><i class="fa-solid fa-calendar-check"></i>Serving Northern Ohio since 2009</span>
+  <span><i class="fa-solid fa-shield-halved"></i>HIPAA-compliant &amp; encrypted</span>
+</div>`;
+
+const WHY_US = `
+<section class="alt"><div class="oe-wrap oe-center">
+  <h2>Why patients choose Ohio Endocrinology</h2>
+  <p class="oe-sub">We're not generalists. Hormones and metabolism are all we do — and it shows in how visits feel.</p>
+  <div class="oe-why">
+    <div class="card"><div class="ic"><i class="fa-solid fa-user-doctor"></i></div><h3>Specialists, not generalists</h3><p>Led by Dr. Vikram Kumar, MD, FACE — practicing endocrinology since 1993, Division Chief of Endocrinology at Fairview Hospital (Cleveland Clinic) and Chief of Medicine at University Hospital Elyria.</p></div>
+    <div class="card"><div class="ic"><i class="fa-solid fa-vial"></i></div><h3>Answers at the visit</h3><p>A1C tested in-house with results while you're in the room, plans adjusted the same day, and everything explained in plain language — no phone tag.</p></div>
+    <div class="card"><div class="ic"><i class="fa-solid fa-house-medical"></i></div><h3>Care that fits your life</h3><p>Two offices — Elyria and Westlake — plus secure televisits anywhere in Ohio. Request an appointment online and we'll call you within one business day.</p></div>
+  </div>
+</div></section>`;
+
+const QUOTES = `
+<section><div class="oe-wrap oe-center">
+  <h2>What our patients say</h2>
+  <p class="oe-sub">Real feedback from patients across Northern Ohio.</p>
+  <div class="oe-quotes" style="text-align:left">
+    ${TESTIMONIALS.map((t) => `<div class="card"><div class="stars">★★★★★</div><blockquote>${esc(t)}</blockquote><div class="who">Verified patient</div></div>`).join('')}
+  </div>
+</div></section>`;
+
+function ctaTrust() {
+  return `<div class="oe-trustrow">
+    <span><i class="fa-solid fa-phone"></i>${P.phone}</span>
+    <span><i class="fa-solid fa-comment-sms"></i>Text ${P.text}</span>
+    <span><i class="fa-solid fa-video"></i>Televisits available</span>
+    <span><span class="gold">★</span> Caring for Northern Ohio since 2009</span>
+  </div>`;
+}
+
+function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, faqs, heroExtras = true }) {
   const rel = '../../';
   const canonical = `${P.domain}/${path}/`;
   const ld = [CLINIC_LD];
@@ -83,8 +173,7 @@ function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, f
       mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
     });
   }
-  if (ldExtra) ld.push(ldExtra);
-  const crumbHtml = crumbs.map((c, i) => (c.href ? `<a href="${c.href}">${esc(c.label)}</a>` : esc(c.label))).join(' › ');
+  const crumbHtml = crumbs.map((c) => (c.href ? `<a href="${c.href}">${esc(c.label)}</a>` : esc(c.label))).join(' › ');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,6 +184,7 @@ function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, f
 <link rel="canonical" href="${canonical}">
 <link rel="icon" href="${rel}assets/logo-mark.png">
 <link rel="stylesheet" href="${rel}styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <style>${CSS}</style>
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 </head>
@@ -117,10 +207,12 @@ function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, f
     <div class="oe-eyebrow">${esc(eyebrow)}</div>
     <h1>${esc(h1)}</h1>
     <p>${esc(heroSub)}</p>
+    ${heroExtras ? HERO_CHIPS : ''}
     <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:26px">
       <a class="oe-btn oe-btn-primary" href="${rel}#appointment">Request Appointment</a>
       <a class="oe-btn oe-btn-white" href="${P.phoneHref}">Call ${P.phone}</a>
     </div>
+    ${heroExtras ? HERO_TRUST : ''}
   </div>
 </header>
 <main>
@@ -133,6 +225,7 @@ ${bodyHtml}
       <a class="oe-btn oe-btn-white" href="${rel}#appointment">Request Appointment</a>
       <a class="oe-btn oe-btn-primary" style="background:var(--oe-navy)" href="${P.phoneHref}">Call ${P.phone}</a>
     </div>
+    ${ctaTrust()}
   </div>
 </section>
 <section>
@@ -181,12 +274,14 @@ for (const c of CONDITIONS) ALL[`conditions/${c.slug}`] = { label: c.h1, kicker:
 for (const t of TREATMENTS) ALL[`treatments/${t.slug}`] = { label: t.h1, kicker: t.eyebrow };
 for (const l of LOCATIONS) ALL[`locations/${l.slug}`] = { label: `Endocrinologist near ${l.city}, OH`, kicker: 'Areas We Serve' };
 
+function relCard(p, prefix) {
+  const icon = ICONS[p] || 'fa-location-dot';
+  return `<a href="${prefix}${p}/"><span class="ric"><i class="fa-solid ${icon}"></i></span>${esc(ALL[p].label)}<span>${esc(ALL[p].kicker)}</span></a>`;
+}
+
 function relatedHtml(paths) {
-  const items = paths
-    .filter((p) => ALL[p])
-    .map((p) => `<a href="../../${p}/">${esc(ALL[p].label)}<span>${esc(ALL[p].kicker)}</span></a>`)
-    .join('');
-  return `<section><div class="oe-wrap"><h2>Related care</h2><div class="oe-related">${items}</div></div></section>`;
+  const items = paths.filter((p) => ALL[p]).map((p) => relCard(p, '../../')).join('');
+  return `<section class="alt"><div class="oe-wrap"><h2>Related care</h2><div class="oe-related">${items}</div></div></section>`;
 }
 
 function writePage(path, html) {
@@ -203,7 +298,7 @@ for (const list of [CONDITIONS, TREATMENTS]) {
   for (const c of list) {
     const path = `${kind}/${c.slug}`;
     const intro = `<section><div class="oe-wrap">${c.intro.map((p) => `<p style="font-size:1.05rem">${p}</p>`).join('')}</div></section>`;
-    const body = intro + sectionHtml(c.sections, true) + faqHtml(c.faqs) + relatedHtml(c.related);
+    const body = intro + sectionHtml(c.sections, true) + WHY_US + faqHtml(c.faqs) + QUOTES + relatedHtml(c.related);
     writePage(path, page({
       path,
       title: c.title,
@@ -242,7 +337,7 @@ for (const l of LOCATIONS) {
 <section><div class="oe-wrap">
   <h2>Visiting us from ${l.city}</h2>
   <p>${l.context}. Appointments are confirmed by phone, and our team will help you figure out referrals and insurance before your first visit. To get started, request an appointment online or call <a href="${P.phoneHref}">${P.phone}</a> — we'll call you back within one business day.</p>
-</div></section>` + faqHtml(faqs) + relatedHtml(['conditions/type-2-diabetes', 'conditions/hypothyroidism', 'treatments/glp-1-weight-management', 'treatments/telehealth-endocrinology']);
+</div></section>` + WHY_US + faqHtml(faqs) + QUOTES + relatedHtml(['conditions/type-2-diabetes', 'conditions/hypothyroidism', 'treatments/glp-1-weight-management', 'treatments/telehealth-endocrinology']);
   writePage(path, page({
     path,
     title,
@@ -261,11 +356,11 @@ function hub(path, title, metaDesc, h1, sub, groups) {
   const body = groups
     .map(
       (g, i) => `<section${i % 2 ? ' class="alt"' : ''}><div class="oe-wrap"><h2>${esc(g.h2)}</h2><div class="oe-related">${g.items
-        .map((p) => `<a href="../${p}/">${esc(ALL[p].label)}<span>${esc(ALL[p].kicker)}</span></a>`)
+        .map((p) => relCard(p, '../'))
         .join('')}</div></div></section>`
     )
-    .join('\n');
-  // hub pages live one level up, fix rel paths from the shared template (../../ -> ../)
+    .join('\n') + WHY_US.replaceAll('../../', '../') + QUOTES;
+  // hub pages live one level up; fix the shared template's ../../ prefix
   const html = page({
     path,
     title,
