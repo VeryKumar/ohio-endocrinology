@@ -182,6 +182,13 @@ function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, f
 <title>${esc(title)} | ${P.name}</title>
 <meta name="description" content="${esc(metaDesc)}">
 <link rel="canonical" href="${canonical}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="${P.name}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(metaDesc)}">
+<meta property="og:url" content="${canonical}">
+<meta property="og:image" content="${P.domain}/assets/logo-mark.png">
+<meta name="twitter:card" content="summary">
 <link rel="icon" href="${rel}assets/logo-mark.png">
 <link rel="stylesheet" href="${rel}styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
