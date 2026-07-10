@@ -50,7 +50,7 @@ function Footer() {
             <FooterLink href="#services">Diabetes Management</FooterLink><FooterLink href="#services">Insulin Pumps &amp; CGM</FooterLink><FooterLink href="#services">Hormone &amp; Endocrine</FooterLink><FooterLink href="#services">In-house A1C</FooterLink>
           </FooterCol>
           <FooterCol title="Patients">
-            <FooterLink href={window.OE_PORTAL}>Patient Portal</FooterLink><FooterLink href="portal-help/">Portal Registration Guide</FooterLink><FooterLink href="#newpatients">New Patients</FooterLink><FooterLink href="#testimonials">Testimonials</FooterLink><FooterLink href="conditions/">Conditions We Treat</FooterLink><FooterLink href="treatments/">Treatments &amp; Services</FooterLink><FooterLink href="locations/">Areas We Serve</FooterLink>
+            <FooterLink href={window.OE_PORTAL}>Patient Portal</FooterLink><FooterLink href="portal-help/">Portal Registration Guide</FooterLink><FooterLink href="#newpatients">New Patients</FooterLink><FooterLink href="#testimonials">Testimonials</FooterLink><FooterLink href="guides/">Patient Guides</FooterLink><FooterLink href="conditions/">Conditions We Treat</FooterLink><FooterLink href="treatments/">Treatments &amp; Services</FooterLink><FooterLink href="locations/">Areas We Serve</FooterLink>
           </FooterCol>
           <FooterCol title="Contact">
             <span style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.9rem' }}><i className="fa-solid fa-phone" style={{ color: 'var(--oe-teal)', width: 18 }} /> {window.OE_PHONE}</span>

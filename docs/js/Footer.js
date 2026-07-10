@@ -170,6 +170,8 @@ function Footer() {
   }, "New Patients"), /*#__PURE__*/React.createElement(FooterLink, {
     href: "#testimonials"
   }, "Testimonials"), /*#__PURE__*/React.createElement(FooterLink, {
+    href: "guides/"
+  }, "Patient Guides"), /*#__PURE__*/React.createElement(FooterLink, {
     href: "conditions/"
   }, "Conditions We Treat"), /*#__PURE__*/React.createElement(FooterLink, {
     href: "treatments/"

@@ -472,3 +472,220 @@ export const LOCATIONS = [
   { slug: 'north-olmsted', city: 'North Olmsted', office: 'westlake', context: 'From North Olmsted, our Westlake office is minutes away on Center Ridge Rd' },
   { slug: 'rocky-river', city: 'Rocky River', office: 'westlake', context: 'From Rocky River, our Westlake office offers specialist care without the downtown drive' },
 ];
+
+// Patient guides — the "what separates good care from bad care" cluster.
+// Tone guardrail: empower the reader and describe what good care looks like;
+// never disparage other physicians or practices.
+export const GUIDES = [
+  {
+    slug: 'signs-of-a-good-doctor',
+    keyword: 'signs of a good doctor',
+    title: 'What Makes a Good Doctor? Signs to Look For — and Red Flags',
+    h1: 'What separates a good doctor from a bad one',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'The signs of a doctor who truly listens — and the red flags of one who doesn’t. What patients deserve from endocrine care, and how to tell the difference.',
+    intro: [
+      `Most people can't evaluate a doctor's medical knowledge — that's what board certification is for. But you can absolutely evaluate the thing that matters just as much: how they treat you. Whether they ask. Whether they listen. Whether your problem moves forward on your timeline, or sits in a queue on theirs.`,
+      `After decades of practice, we've come to believe the difference between good and bad care usually isn't knowledge — it's attention. Here's what to look for.`,
+    ],
+    sections: [
+      {
+        h2: 'A good doctor asks — and then actually listens',
+        body: `<p>The best predictor of a good visit happens in the first two minutes: does the doctor ask what's been going on and let you finish your answer? A doctor who asks open questions, follows up on what you said (not just what the chart says), and checks "did I get that right?" is doing the real work of diagnosis. You should leave a visit feeling heard — not processed.</p><p>The red-flag version: your concerns get a nod and the conversation snaps back to a script. You mention fatigue or weight changes and hear "that's just age" or "your labs are normal" as a conversation-ender rather than the start of a better question.</p>`,
+      },
+      {
+        h2: 'Answers on your timeline, not theirs',
+        body: `<p>Good care respects that you're the one living with the problem. That looks like: appointments you can actually get, test results explained promptly instead of drifting for weeks, and a plan that changes at the visit when the numbers say it should. It's why we run A1C testing in-house — so decisions happen while you're in the room — and why we return appointment requests within one business day.</p><p>The red-flag version: every question needs another appointment, results arrive without explanation (or don't arrive), and months pass between "something's wrong" and anything actually changing.</p>`,
+      },
+      {
+        h2: 'Plain language is a skill — and a sign of respect',
+        body: `<p>A doctor who can't explain your condition without jargon either doesn't fully understand it or isn't trying. Good doctors translate: what's happening, why the plan is the plan, what would make us change it. You shouldn't need to go home and search your own diagnosis to understand your own visit.</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'Is it normal to feel rushed at doctor visits?', a: 'It’s common — but it isn’t something you have to accept, especially for complex, long-term conditions like diabetes and thyroid disease where the details genuinely matter.' },
+      { q: 'My labs are "normal" but I still feel bad. Should I push back?', a: 'Yes. "Normal" lab ranges are population averages, and a result can be technically in range while wrong for you. A good doctor treats persistent symptoms as information, not an inconvenience.' },
+      { q: 'What credentials should I look for in an endocrinologist?', a: 'Board certification in endocrinology is the baseline. Hospital appointments and teaching roles are good signals of standing among peers. But pair credentials with how the doctor communicates — both matter.' },
+      { q: 'How do I find out how a practice treats patients before booking?', a: 'Read recent patient reviews for specifics (do people mention being listened to?), and call the office with a question — how the staff handles that call tells you a lot.' },
+    ],
+    related: ['guides/doctor-not-listening', 'guides/questions-to-ask-your-endocrinologist', 'guides/how-to-choose-an-endocrinologist'],
+  },
+  {
+    slug: 'doctor-not-listening',
+    keyword: 'my doctor is not listening to me',
+    title: 'When Your Doctor Isn’t Listening: What to Do Next',
+    h1: 'When your doctor isn’t listening',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'Feeling dismissed or sidelined by your doctor? Practical steps to be heard — and how to know when it’s time for a second opinion or a new specialist.',
+    intro: [
+      `Few things are more discouraging than describing symptoms you live with every day and watching them get waved away. If you've heard "it's probably just stress," "that's normal at your age," or "your labs look fine" — while you keep feeling worse — this page is for you.`,
+      `Two things are true at once: you can take practical steps to be heard at your current doctor, and you're allowed to decide you deserve better attention. Hormone symptoms in particular — fatigue, weight changes, mood shifts, feeling cold or wired — are among the most commonly brushed aside, precisely because they're vague. They're also exactly what endocrinologists are trained to take seriously.`,
+    ],
+    sections: [
+      {
+        h2: 'How to be harder to dismiss',
+        body: `<p>Bring a written timeline: when symptoms started, how they've changed, what makes them better or worse. Specifics resist dismissal — "I've gained 18 pounds since March without changing anything" lands differently than "I've been gaining weight." Bring someone with you if you can; a second set of ears changes room dynamics. And ask questions that require a real answer: "What else could explain this?" and "If it's not my thyroid, what should we test to rule things out?"</p><p>Ask for copies of your labs, too. You're entitled to them, and patterns across years sometimes tell a story a single visit misses.</p>`,
+      },
+      {
+        h2: 'When it’s time to stop convincing and start switching',
+        body: `<p>If you've done the above more than once and still feel like a task to be closed rather than a person to be helped, that's information. Persistent unexplained symptoms are a legitimate reason to see a specialist — you don't need your current doctor's blessing to seek one, and many insurance plans let you book an endocrinologist directly.</p><p>When you see us, expect the opposite of being sidelined: we'll ask, we'll listen to the whole answer, and we'll lay out what we're going to check and why — in plain language, with a timeline you can hold us to.</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'Will a new doctor think I’m being dramatic if I switch over this?', a: 'No good doctor thinks that. Patients who arrive with a symptom history and unanswered questions are patients we can actually help — that’s the job.' },
+      { q: 'What symptoms do endocrinologists take seriously that often get dismissed?', a: 'Persistent fatigue, unexplained weight changes, feeling cold or overheated, hair thinning, mood and sleep changes, and blood sugar swings — all can have hormonal causes worth properly ruling in or out.' },
+      { q: 'Do I need my current doctor’s referral to see you?', a: 'Many insurance plans allow direct specialist booking. Call us at (440) 322-0872 and we’ll help you check what your plan requires.' },
+      { q: 'What records should I bring from my current doctor?', a: 'Recent lab results are the most useful — especially thyroid panels and A1C history. We can also request records for you once you’re a patient; you won’t have to start from zero.' },
+    ],
+    related: ['guides/signs-of-a-good-doctor', 'guides/second-opinion-endocrinologist', 'guides/switching-endocrinologists'],
+  },
+  {
+    slug: 'how-to-choose-an-endocrinologist',
+    keyword: 'how to choose an endocrinologist',
+    title: 'How to Choose an Endocrinologist in Northern Ohio',
+    h1: 'How to choose an endocrinologist',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'A practical checklist for choosing an endocrinologist: credentials, access, communication style, and the questions to ask before your first visit.',
+    intro: [
+      `Choosing a specialist you may see for years deserves more than picking the first search result. The good news: a few practical checks separate the practices that will serve you well from the ones that will frustrate you.`,
+      `Here's the checklist we'd give a family member searching anywhere — Northern Ohio included.`,
+    ],
+    sections: [
+      {
+        h2: 'The four things worth checking',
+        body: `<p><strong>Credentials and standing.</strong> Board certification in endocrinology is the baseline; hospital leadership and teaching appointments signal respect from peers. <strong>Access.</strong> How long until a new patient is seen? Are televisits offered for follow-ups? A brilliant doctor you can't get in to see doesn't help you. <strong>How visits actually run.</strong> Are labs like A1C done in-house with same-visit results, or does every number mean another week of waiting? <strong>Communication.</strong> Call the office once before booking — whether that call is handled with patience predicts how the practice will treat you as a patient.</p>`,
+      },
+      {
+        h2: 'Fit matters more than people admit',
+        body: `<p>Endocrine conditions are managed in conversations, month after month. If a doctor explains things in a way that makes sense to you, asks about your life before rewriting your plan, and welcomes your questions, you'll do better — that's not a soft factor, it shows up in your numbers. It's reasonable to book one visit as a trial run and judge exactly that.</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'Endocrinologist vs. primary care for diabetes or thyroid — when do I need the specialist?', a: 'Primary care handles straightforward cases well. Consider a specialist when numbers won’t stabilize, medications keep changing, symptoms persist despite "normal" labs, or you want technology like pumps and CGMs managed by people who work with them daily.' },
+      { q: 'Does distance matter?', a: 'Less than it used to — many follow-ups work well by televisit. Choose the best doctor within a reasonable drive for in-person visits, and do routine check-ins by video.' },
+      { q: 'What insurance questions should I ask when booking?', a: 'Whether the practice is in-network for your plan, whether you need a referral, and what a specialist copay looks like. Any good office will help you check — ours does.' },
+      { q: 'How soon can I be seen at Ohio Endocrinology?', a: 'We keep new-patient scheduling accessible. Send an appointment request online and we’ll call within one business day to find a time.' },
+    ],
+    related: ['guides/signs-of-a-good-doctor', 'guides/questions-to-ask-your-endocrinologist', 'guides/first-endocrinologist-visit'],
+  },
+  {
+    slug: 'questions-to-ask-your-endocrinologist',
+    keyword: 'questions to ask endocrinologist',
+    title: 'Questions to Ask Your Endocrinologist (Print This List)',
+    h1: 'Questions worth asking your endocrinologist',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'The questions that make endocrinology visits count — about your diagnosis, treatment options, monitoring, and what to do between visits.',
+    intro: [
+      `A good specialist visit is a two-way conversation, and the fastest way to raise the quality of your care is to arrive with questions. Not because your doctor won't volunteer information — a good one will — but because your questions steer the visit toward what you actually need to know.`,
+      `Here's the list we wish every patient brought. A doctor who welcomes these questions is a keeper; a doctor who's bothered by them just told you something important.`,
+    ],
+    sections: [
+      {
+        h2: 'About your diagnosis',
+        body: `<p>What exactly is my diagnosis, in plain words? How confident are we — and what else could explain my symptoms? Which of my lab values are you watching, and what do you want them to be? Is anything about my case unusual?</p>`,
+      },
+      {
+        h2: 'About your treatment',
+        body: `<p>What are all of my options, including doing nothing for now? Why this medication over the alternatives — and what are the honest trade-offs? What should improve, and by when? What would make you change the plan? If cost is a concern, is there an equally good cheaper option?</p>`,
+      },
+      {
+        h2: 'About life between visits',
+        body: `<p>What symptoms should make me call you before my next appointment? How do I reach your team with a quick question — and how fast do you respond? When will I be rechecked, and will results be explained to me or just filed? Can routine follow-ups be done by televisit?</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'Is it rude to ask a doctor to explain their reasoning?', a: 'Not at all — it’s your body and your plan. Doctors who know their reasoning explain it happily. We consider "why" the most useful question a patient asks.' },
+      { q: 'Should I write down the answers?', a: 'Yes, or bring someone who will. Most people retain a fraction of what’s said in a medical visit. Notes turn a good conversation into a usable plan.' },
+      { q: 'What if I run out of time before my questions are answered?', a: 'Ask which questions matter most to answer today, and how to get the rest answered — portal message, call, or follow-up. How a practice handles that request is telling.' },
+      { q: 'What should I bring to make the visit productive?', a: 'Your medication list with doses, recent labs if you have them, your glucose meter or CGM data if you use one, and your symptom timeline. Preparation is half the visit.' },
+    ],
+    related: ['guides/first-endocrinologist-visit', 'guides/how-to-choose-an-endocrinologist', 'guides/signs-of-a-good-doctor'],
+  },
+  {
+    slug: 'second-opinion-endocrinologist',
+    keyword: 'second opinion endocrinologist',
+    title: 'Getting a Second Opinion from an Endocrinologist',
+    h1: 'Second opinions: when and how to get one',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'When a second opinion on your diabetes, thyroid, or hormone care makes sense, how to get one without awkwardness, and what to bring.',
+    intro: [
+      `A second opinion isn't an insult to your doctor — it's due diligence on your own health. Good physicians welcome them; medicine has genuine judgment calls, and a fresh set of expert eyes either confirms your plan (valuable) or improves it (more valuable).`,
+      `In endocrinology, a few situations practically beg for one.`,
+    ],
+    sections: [
+      {
+        h2: 'When a second opinion earns its keep',
+        body: `<p><strong>Before big, hard-to-reverse decisions</strong> — thyroid surgery, radioactive iodine, or starting long-term therapies. <strong>When progress has stalled</strong> — an A1C that hasn't moved in a year despite "trying everything." <strong>When symptoms and labs disagree</strong> — you feel unwell, everything is "normal," and the conversation has stopped advancing. <strong>When the diagnosis never quite fit</strong> — treatments that should work, don't.</p>`,
+      },
+      {
+        h2: 'How to do it gracefully',
+        body: `<p>You don't need permission, and you usually don't need a confrontation either — "I'd like a second set of eyes before we commit" is a complete sentence. Gather your recent labs, imaging reports, and medication history (you're legally entitled to your records). Then book directly with a specialist; many plans don't require a referral for this.</p><p>We see second-opinion patients regularly. Sometimes we confirm the existing plan and say so plainly — that's a good outcome too. Either way, you leave with reasoning you understand.</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'Will my current doctor be offended?', a: 'Good doctors aren’t — second opinions are routine in medicine. And if a doctor reacts badly to one, that reaction is itself useful information.' },
+      { q: 'Does insurance cover second opinions?', a: 'Usually yes, as a regular specialist visit. Some plans encourage them before major procedures. We’ll help you verify when you book.' },
+      { q: 'What records do I need?', a: 'Recent labs (thyroid panels, A1C history), any imaging or biopsy reports, and your medication history. We can help request records once you’ve booked.' },
+      { q: 'What happens if your opinion differs from my doctor’s?', a: 'We’ll explain exactly where and why we differ, in plain language, and give you what you need to decide — including questions to take back to your current doctor. The decision stays yours.' },
+    ],
+    related: ['guides/doctor-not-listening', 'guides/switching-endocrinologists', 'conditions/thyroid-nodules'],
+  },
+  {
+    slug: 'switching-endocrinologists',
+    keyword: 'switching endocrinologists',
+    title: 'Switching Endocrinologists: When and How to Change',
+    h1: 'Switching endocrinologists, without the gap',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'How to switch endocrinologists smoothly: when it’s justified, how records transfer, and how to avoid any gap in prescriptions or care.',
+    intro: [
+      `People stay with doctors who aren't serving them for the same reason they stay with bad phone carriers: switching feels like hassle. But unlike your phone plan, this relationship affects your health every day — and the switch is easier than you think.`,
+      `Here's the honest playbook, including how to make sure your prescriptions never skip a beat.`,
+    ],
+    sections: [
+      {
+        h2: 'Reasons that justify a switch',
+        body: `<p>You consistently feel unheard or rushed. Getting an appointment takes months. Results come back without explanation. Your numbers have plateaued and the plan never changes. You've moved, and "toughing out the drive" means you skip visits. Any one of these is enough — you don't need to build a legal case. The standard is simple: is this care helping you get better on a timeline you can live with?</p>`,
+      },
+      {
+        h2: 'The no-gap switching plan',
+        body: `<p>Book the new doctor <em>before</em> leaving the old one, and make sure you have enough medication refills to bridge to that first visit — if not, request refills first. Sign a records release so your labs and history transfer (the new office usually handles this — we do). You don't owe the old practice an exit interview; a records request is all the notice required.</p><p>At your first visit with us, bring your medication list and any recent labs you have. We review your history, run what's missing — A1C in-house, same visit — and you leave with a plan, not a to-do list.</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'Will there be a gap in my prescriptions?', a: 'There doesn’t have to be. Check your refill count before switching, and tell us at booking if you’re running low — we’ll prioritize getting you seen and covered.' },
+      { q: 'How do my medical records transfer?', a: 'You sign a release form and the offices handle the rest. We’ll initiate the request for you when you book — you don’t have to negotiate with your old practice.' },
+      { q: 'Do I need to tell my old endocrinologist why I’m leaving?', a: 'No. It’s courteous but entirely optional. The records request is all that’s formally needed.' },
+      { q: 'How fast can I get in as a new patient?', a: 'Send an appointment request online or call (440) 322-0872 — we respond within one business day and keep new-patient scheduling accessible.' },
+    ],
+    related: ['guides/second-opinion-endocrinologist', 'guides/first-endocrinologist-visit', 'guides/doctor-not-listening'],
+  },
+  {
+    slug: 'first-endocrinologist-visit',
+    keyword: 'what to expect first endocrinologist appointment',
+    title: 'Your First Endocrinologist Visit: What to Expect',
+    h1: 'Your first visit, demystified',
+    eyebrow: 'Patient Guides',
+    metaDesc: 'What actually happens at a first endocrinology appointment — what we ask, what we test, what to bring, and how you’ll leave with a plan.',
+    intro: [
+      `Not knowing what to expect keeps a surprising number of people from booking the specialist visit they need. So here's exactly how a first appointment with us runs — no mystery, no surprises.`,
+      `The short version: we ask a lot, we listen to the answers, we test what needs testing, and you leave understanding your situation better than when you arrived.`,
+    ],
+    sections: [
+      {
+        h2: 'How the visit runs',
+        body: `<p>Your doctor reviews your medical history in detail and performs a full examination — this is the "asking and listening" part, and we don't rush it. We go through your symptoms on your timeline: when things started, what's changed, what you've already tried. Then we explain what we think is going on and what we want to check, in plain language. If an A1C is needed, we run it in-house and discuss the result during the visit. We typically provide any lab slips at the end of the visit, so you can complete remaining tests when it's convenient for you.</p>`,
+      },
+      {
+        h2: 'What to bring (and what happens next)',
+        body: `<p>Bring your medication list with doses, any recent lab results, your glucose meter or CGM data if you use one, and your insurance card. Registering on our <a href="../../portal-help/">patient portal</a> ahead of time speeds up check-in — or our team can help you register by phone before your visit.</p><p>You'll leave knowing three things: what we think is happening, what we're doing about it, and when we'll know if it's working. Follow-ups can often be done by televisit.</p>`,
+      },
+    ],
+    faqs: [
+      { q: 'How long is a first appointment?', a: 'Plan for a thorough visit — first appointments are longer than follow-ups because we review your full history properly. It’s time invested once that pays off for years.' },
+      { q: 'Will I get lab work done at the first visit?', a: 'Often, yes — A1C is done in-house with same-visit results. Other labs may be ordered with slips you can complete at your convenience.' },
+      { q: 'Should I stop any medications before coming?', a: 'No — don’t change anything without guidance. Bring your complete, current list and we’ll take it from there.' },
+      { q: 'Can my first visit be a televisit?', a: 'Often, depending on your concern. Call (440) 322-0872 and we’ll recommend the right visit type.' },
+    ],
+    related: ['guides/questions-to-ask-your-endocrinologist', 'treatments/in-house-a1c-testing', 'treatments/telehealth-endocrinology'],
+  },
+];

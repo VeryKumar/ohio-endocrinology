@@ -5,7 +5,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { PRACTICE as P, CONDITIONS, TREATMENTS, LOCATIONS } from './authority-content.mjs';
+import { PRACTICE as P, CONDITIONS, TREATMENTS, LOCATIONS, GUIDES } from './authority-content.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = join(ROOT, 'docs');
@@ -28,6 +28,14 @@ const ICONS = {
   'treatments/continuous-glucose-monitoring': 'fa-wave-square',
   'treatments/in-house-a1c-testing': 'fa-vial',
   'treatments/telehealth-endocrinology': 'fa-video',
+  'guides/signs-of-a-good-doctor': 'fa-user-doctor',
+  'guides/doctor-not-listening': 'fa-ear-listen',
+  'guides/how-to-choose-an-endocrinologist': 'fa-list-check',
+  'guides/questions-to-ask-your-endocrinologist': 'fa-circle-question',
+  'guides/second-opinion-endocrinologist': 'fa-people-arrows',
+  'guides/switching-endocrinologists': 'fa-right-left',
+  'guides/first-endocrinologist-visit': 'fa-door-open',
+  'portal-help': 'fa-clipboard-list',
 };
 
 const CLINIC_LD = {
@@ -203,6 +211,7 @@ function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, f
       <a class="plain" href="${rel}conditions/">Conditions</a>
       <a class="plain" href="${rel}treatments/">Treatments</a>
       <a class="plain" href="${rel}locations/">Locations</a>
+      <a class="plain" href="${rel}guides/">Guides</a>
       <a class="plain" href="${P.phoneHref}">${P.phone}</a>
       <a class="oe-btn oe-btn-primary" href="${rel}#appointment">Request Appointment</a>
     </div>
@@ -253,6 +262,7 @@ ${bodyHtml}
       <a href="${rel}conditions/">Conditions we treat</a><br>
       <a href="${rel}treatments/">Treatments &amp; services</a><br>
       <a href="${rel}locations/">Areas we serve</a><br>
+      <a href="${rel}guides/">Patient guides</a><br>
       <a href="${P.portal}" rel="noopener" target="_blank">Patient portal</a>
     </div>
   </div>
@@ -280,6 +290,8 @@ const ALL = {};
 for (const c of CONDITIONS) ALL[`conditions/${c.slug}`] = { label: c.h1, kicker: c.eyebrow };
 for (const t of TREATMENTS) ALL[`treatments/${t.slug}`] = { label: t.h1, kicker: t.eyebrow };
 for (const l of LOCATIONS) ALL[`locations/${l.slug}`] = { label: `Endocrinologist near ${l.city}, OH`, kicker: 'Areas We Serve' };
+for (const g of GUIDES) ALL[`guides/${g.slug}`] = { label: g.h1, kicker: g.eyebrow };
+ALL['portal-help'] = { label: 'Portal registration, without the guesswork', kicker: 'New Patients' };
 
 function relCard(p, prefix) {
   const icon = ICONS[p] || 'fa-location-dot';
@@ -298,14 +310,18 @@ function writePage(path, html) {
   console.log('wrote', path + '/index.html');
 }
 
-// ---- condition & treatment pages ----
-for (const list of [CONDITIONS, TREATMENTS]) {
-  const kind = list === CONDITIONS ? 'conditions' : 'treatments';
-  const hubLabel = kind === 'conditions' ? 'Conditions' : 'Treatments';
+// ---- condition, treatment & guide pages ----
+for (const list of [CONDITIONS, TREATMENTS, GUIDES]) {
+  const kind = list === CONDITIONS ? 'conditions' : list === TREATMENTS ? 'treatments' : 'guides';
+  const hubLabel = kind === 'conditions' ? 'Conditions' : kind === 'treatments' ? 'Treatments' : 'Patient Guides';
   for (const c of list) {
     const path = `${kind}/${c.slug}`;
     const intro = `<section><div class="oe-wrap">${c.intro.map((p) => `<p style="font-size:1.05rem">${p}</p>`).join('')}</div></section>`;
-    const body = intro + sectionHtml(c.sections, true) + WHY_US + faqHtml(c.faqs) + QUOTES + relatedHtml(c.related);
+    // tie clinical pages into the choosing-care cluster, and vice versa
+    const related = kind === 'guides'
+      ? [...c.related, 'conditions/type-2-diabetes', 'conditions/hypothyroidism']
+      : [...c.related, 'guides/signs-of-a-good-doctor', 'guides/questions-to-ask-your-endocrinologist'];
+    const body = intro + sectionHtml(c.sections, true) + WHY_US + faqHtml(c.faqs) + QUOTES + relatedHtml(related);
     writePage(path, page({
       path,
       title: c.title,
@@ -397,6 +413,13 @@ hub('locations', 'Areas We Serve', 'Ohio Endocrinology serves Elyria, Westlake, 
   'Areas we serve', 'Two offices — Elyria and Westlake — plus secure televisits for patients anywhere in Ohio.',
   [{ h2: 'Communities we serve', items: LOCATIONS.map((l) => `locations/${l.slug}`) }]);
 
+hub('guides', 'Patient Guides', 'Guides for getting the care you deserve: choosing an endocrinologist, being heard, second opinions, switching doctors, and making visits count.',
+  'Guides to care you deserve', 'You can tell a lot about a doctor by whether they ask — and whether they listen. These guides help you find care that does both, on your timeline.',
+  [
+    { h2: 'Finding care that listens', items: ['guides/signs-of-a-good-doctor', 'guides/doctor-not-listening', 'guides/how-to-choose-an-endocrinologist'] },
+    { h2: 'Making your care count', items: ['guides/questions-to-ask-your-endocrinologist', 'guides/first-endocrinologist-visit', 'guides/second-opinion-endocrinologist', 'guides/switching-endocrinologists', 'portal-help'] },
+  ]);
+
 // ---- portal registration guide ----
 {
   const path = 'portal-help';
@@ -450,7 +473,8 @@ hub('locations', 'Areas We Serve', 'Ohio Endocrinology serves Elyria, Westlake, 
 }
 
 // ---- sitemap.xml & robots.txt ----
-const urls = ['', 'conditions/', 'treatments/', 'locations/', 'portal-help/',
+const urls = ['', 'conditions/', 'treatments/', 'locations/', 'guides/', 'portal-help/',
+  ...GUIDES.map((g) => `guides/${g.slug}/`),
   ...CONDITIONS.map((c) => `conditions/${c.slug}/`),
   ...TREATMENTS.map((t) => `treatments/${t.slug}/`),
   ...LOCATIONS.map((l) => `locations/${l.slug}/`)];
