@@ -475,6 +475,7 @@ hub('guides', 'Patient Guides', 'Guides for getting the care you deserve: choosi
 
 // ---- sitemap.xml & robots.txt ----
 const urls = ['', 'conditions/', 'treatments/', 'locations/', 'guides/', 'portal-help/',
+  'forms/', 'forms/new-patient/', 'forms/records-request/',
   ...GUIDES.map((g) => `guides/${g.slug}/`),
   ...CONDITIONS.map((c) => `conditions/${c.slug}/`),
   ...TREATMENTS.map((t) => `treatments/${t.slug}/`),

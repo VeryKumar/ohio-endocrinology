@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Patient Pre-Registration | Ohio Endocrinology</title>
+<meta name="description" content="Save time at your first visit — send Ohio Endocrinology your basic details ahead of time with this quick digital form.">
+<link rel="canonical" href="https://www.ohioendocrinology.com/forms/new-patient/">
+<link rel="icon" href="../../assets/logo-mark.png">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../revado-forms.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script data-goatcounter="https://ohioendo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<nav class="rf-topnav" aria-label="Main">
+  <div class="rf-topnav-in">
+    <a class="rf-brand" href="../../"><img src="../../assets/logo-mark.png" alt=""><b>Ohio Endocrinology</b></a>
+    <a class="rf-phone" href="tel:+14403220872"><i class="fa-solid fa-phone"></i> (440) 322-0872</a>
+  </div>
+</nav>
+<header class="rf-hero">
+  <div class="rf-wrap">
+    <div class="rf-eyebrow">Digital Forms</div>
+    <h1>New patient pre-registration</h1>
+    <p>Five quick steps, about 3 minutes — so your first visit starts with care, not paperwork. We'll call you within one business day to confirm everything.</p>
+  </div>
+</header>
+<main class="rf-wrap">
+  <div class="rf-card">
+    <div id="revado-form"></div>
+  </div>
+  <div class="rf-hipaa"><i class="fa-solid fa-triangle-exclamation"></i><span><strong>Please don't include medical details</strong> — no diagnoses, medications, or health history in this form. We'll cover those privately at your visit. Have your insurance card with you at check-in.</span></div>
+  <div class="rf-powered"><a href="https://revado.ai" rel="noopener" target="_blank"><i class="fa-solid fa-bolt rf-bolt"></i>Powered by Revado</a></div>
+</main>
+<footer class="rf-foot">
+  <div class="rf-wrap">© 2026 Diabetes, Thyroid &amp; Endocrinology of Northern Ohio · <a href="../../">Home</a> · <a href="../">All forms</a> · <a href="tel:+14403220872">(440) 322-0872</a></div>
+</footer>
+<script src="../revado-forms.js"></script>
+<script>
+RevadoForm('revado-form', {
+  name: 'New patient pre-registration',
+  subjectPrefix: 'form-lead: new patient',
+  nameKey: 'fullName',
+  endpoint: 'https://api.web3forms.com/submit',
+  accessKey: 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01',
+  steps: [
+    { title: 'About you', fields: [
+      { key: 'fullName', label: 'Full legal name', type: 'text', required: true, autocomplete: 'name', hint: 'Exactly as it appears on your insurance card.', half: true },
+      { key: 'dob', label: 'Date of birth', type: 'date', required: true, half: true },
+      { key: 'patientType', label: 'Have you been seen by us before?', type: 'select', options: ['No — new patient', 'Yes — returning patient'], required: true },
+    ]},
+    { title: 'Contact details', fields: [
+      { key: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel', hint: 'We confirm appointments by phone.', half: true },
+      { key: 'email', label: 'Email', type: 'email', autocomplete: 'email', half: true },
+      { key: 'address', label: 'Street address', type: 'text', autocomplete: 'street-address' },
+      { key: 'city', label: 'City', type: 'text', autocomplete: 'address-level2', half: true },
+      { key: 'zip', label: 'ZIP code', type: 'text', autocomplete: 'postal-code', half: true },
+    ]},
+    { title: 'Insurance', fields: [
+      { key: 'insurance', label: 'Insurance company', type: 'text', hint: 'Just the company name (e.g., Medical Mutual, Anthem). Leave blank if self-pay — bring your card to your visit.', half: true },
+      { key: 'policyHolder', label: 'Policy holder name', type: 'text', hint: 'If the plan is in someone else’s name.', half: true },
+    ]},
+    { title: 'Care details', fields: [
+      { key: 'referring', label: 'Referring doctor', type: 'text', hint: 'If a doctor sent you to us.', half: true },
+      { key: 'pharmacy', label: 'Preferred pharmacy', type: 'text', hint: 'Name and location, e.g. "CVS, Elyria".', half: true },
+      { key: 'office', label: 'Preferred office', type: 'select', options: ['Elyria (primary)', 'Westlake (satellite)', 'Televisit', 'No preference'], half: true },
+      { key: 'time', label: 'Preferred appointment time', type: 'select', options: ['Morning', 'Afternoon', 'No preference'], half: true },
+    ]},
+  ],
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Medical Records Request | Ohio Endocrinology</title>
+<meta name="description" content="Request a copy or transfer of your medical records from Ohio Endocrinology with this quick digital form.">
+<link rel="canonical" href="https://www.ohioendocrinology.com/forms/records-request/">
+<link rel="icon" href="../../assets/logo-mark.png">
+<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="../revado-forms.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script data-goatcounter="https://ohioendo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<nav class="rf-topnav" aria-label="Main">
+  <div class="rf-topnav-in">
+    <a class="rf-brand" href="../../"><img src="../../assets/logo-mark.png" alt=""><b>Ohio Endocrinology</b></a>
+    <a class="rf-phone" href="tel:+14403220872"><i class="fa-solid fa-phone"></i> (440) 322-0872</a>
+  </div>
+</nav>
+<header class="rf-hero">
+  <div class="rf-wrap">
+    <div class="rf-eyebrow">Digital Forms</div>
+    <h1>Medical records request</h1>
+    <p>Need your records sent to you or another doctor? Start the request here — our team will call to verify your identity and complete the release securely.</p>
+  </div>
+</header>
+<main class="rf-wrap">
+  <div class="rf-card">
+    <div id="revado-form"></div>
+  </div>
+  <div class="rf-hipaa"><i class="fa-solid fa-shield-halved"></i><span><strong>For your privacy</strong>, records are only released after we verify your identity by phone and receive your signed authorization — this form starts the process. Please don't include medical details here.</span></div>
+  <div class="rf-powered"><a href="https://revado.ai" rel="noopener" target="_blank"><i class="fa-solid fa-bolt rf-bolt"></i>Powered by Revado</a></div>
+</main>
+<footer class="rf-foot">
+  <div class="rf-wrap">© 2026 Diabetes, Thyroid &amp; Endocrinology of Northern Ohio · <a href="../../">Home</a> · <a href="../">All forms</a> · <a href="tel:+14403220872">(440) 322-0872</a></div>
+</footer>
+<script src="../revado-forms.js"></script>
+<script>
+RevadoForm('revado-form', {
+  name: 'Medical records request',
+  subjectPrefix: 'form-lead: records request',
+  nameKey: 'fullName',
+  endpoint: 'https://api.web3forms.com/submit',
+  accessKey: 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01',
+  steps: [
+    { title: 'Who you are', fields: [
+      { key: 'fullName', label: 'Full legal name', type: 'text', required: true, autocomplete: 'name', half: true },
+      { key: 'dob', label: 'Date of birth', type: 'date', required: true, half: true },
+      { key: 'phone', label: 'Phone', type: 'tel', required: true, autocomplete: 'tel', hint: 'We’ll call this number to verify your identity.', half: true },
+      { key: 'email', label: 'Email', type: 'email', autocomplete: 'email', half: true },
+    ]},
+    { title: 'Your request', fields: [
+      { key: 'requestType', label: 'What do you need?', type: 'select', required: true, options: ['Copy of my records for myself', 'Send my records to another doctor', 'Transfer records TO Ohio Endocrinology from another practice'] },
+      { key: 'destination', label: 'Where should records go?', type: 'text', hint: 'Doctor or practice name and city — or "to me".' },
+      { key: 'notes', label: 'Anything else about this request?', type: 'textarea', hint: 'Date ranges, deadlines, fax numbers — but please no medical details.' },
+    ]},
+  ],
+});
+</script>
+</body>
+</html>
