@@ -201,6 +201,7 @@ function page({ path, title, metaDesc, eyebrow, h1, heroSub, crumbs, bodyHtml, f
 <link rel="stylesheet" href="${rel}styles.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <style>${CSS}</style>
+<script data-goatcounter="https://ohioendo.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 </head>
 <body>
