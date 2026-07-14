@@ -250,7 +250,7 @@ const OE_FORM_KEY = 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01'; // Web3Forms public 
 function AppointmentRequest() {
   const { SectionHeading, Button, Input, Select, Textarea, HipaaNotice, Alert } = OEHomeNS;
   const [status, setStatus] = React.useState('idle'); // idle | sending | sent | error
-  const [form, setForm] = React.useState({ name: '', phone: '', email: '', office: '', patientType: '', date: '', message: '', _honey: '' });
+  const [form, setForm] = React.useState({ name: '', phone: '', email: '', office: '', patientType: '', service: '', date: '', time: '', message: '', _honey: '' });
   const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
   const submit = async (e) => {
     e.preventDefault();
@@ -265,13 +265,16 @@ function AppointmentRequest() {
           subject: 'appointment-lead: ' + form.name + ' — ' + (form.patientType || 'type not selected') + ' · ' + (form.date || 'no date given'),
           from_name: 'Ohio Endocrinology Website',
           botcheck: form._honey,
-          name: form.name,
-          phone: form.phone,
-          email: form.email || undefined,
-          'Preferred date': form.date || '(none given)',
+          'Name': form.name,
+          'Email Address': form.email || '(not provided)',
+          'Phone': form.phone,
+          'Are you a new patient?': form.patientType === 'New patient' ? 'Yes' : form.patientType === 'Returning patient' ? 'No' : '(not selected)',
+          'Service': form.service || 'Other',
           'Preferred office': form.office || 'No preference',
-          'Patient type': form.patientType || '(not selected)',
-          'Message': form.message || '(none)',
+          'Date': form.date || '(none given)',
+          'Time': form.time || 'No preference',
+          'Comments or Questions': form.message || '(none)',
+          email: form.email || undefined,
         }),
       });
       const data = await res.json();
@@ -320,12 +323,28 @@ function AppointmentRequest() {
                 value={form.patientType}
                 onChange={set('patientType')}
               />
+              <Select
+                label="What do you need help with?"
+                placeholder="Choose a service"
+                options={[...(window.OE_SERVICES || []).map((s) => s.title), 'Other']}
+                value={form.service}
+                onChange={set('service')}
+              />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }} className="oe-form-row">
               <Input
                 label="Preferred date"
                 type="date"
                 value={form.date}
                 onChange={set('date')}
                 hint="Optional — we'll confirm the exact time by phone."
+              />
+              <Select
+                label="Preferred time"
+                placeholder="No preference"
+                options={['Morning', 'Afternoon']}
+                value={form.time}
+                onChange={set('time')}
               />
             </div>
             <div style={{ marginBottom: 20 }}>
