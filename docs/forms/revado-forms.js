@@ -216,24 +216,19 @@
       var btns = root.querySelectorAll('.rf-btn');
       btns.forEach(function (b) { b.disabled = true; });
       btns[btns.length - 1].innerHTML = '<span class="rf-spinner"></span> Sending…';
-      var payload = {
-        access_key: cfg.accessKey,
-        subject: cfg.subjectPrefix + ' — ' + (state[cfg.nameKey || 'name'] || 'submission'),
-        from_name: 'Ohio Endocrinology Website — Revado Forms',
-        botcheck: honey,
-      };
+      // Netlify Forms: same-origin urlencoded POST, matched to the page's hidden detection form.
+      var params = new URLSearchParams();
+      params.append('form-name', cfg.formName);
+      params.append('botcheck', honey);
       cfg.steps.forEach(function (s) {
-        s.fields.forEach(function (f) { payload[f.label] = state[f.key] || '(not provided)'; });
+        s.fields.forEach(function (f) { params.append(f.label, state[f.key] || '(not provided)'); });
       });
-      var emailField = null;
-      cfg.steps.forEach(function (s) { s.fields.forEach(function (f) { if (f.type === 'email') emailField = f; }); });
-      if (emailField && state[emailField.key]) payload.email = state[emailField.key];
 
-      fetch(cfg.endpoint, {
+      fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
-      }).then(function (r) { return r.json().then(function (d) { return { ok: r.ok && d.success }; }); })
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      }).then(function (r) { return { ok: r.ok }; })
         .catch(function () { return { ok: false }; })
         .then(function (res) {
           root.innerHTML = '';

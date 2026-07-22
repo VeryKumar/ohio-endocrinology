@@ -48,6 +48,19 @@
 </style>
 </head>
 <body>
+<!-- Netlify Forms detection template for the React-rendered appointment form -->
+<form name="appointment-request" data-netlify="true" netlify-honeypot="botcheck" hidden>
+  <input type="text" name="Name">
+  <input type="text" name="Email Address">
+  <input type="text" name="Phone">
+  <input type="text" name="Are you a new patient?">
+  <input type="text" name="Service">
+  <input type="text" name="Preferred office">
+  <input type="text" name="Date">
+  <input type="text" name="Time">
+  <textarea name="Comments or Questions"></textarea>
+  <input type="text" name="botcheck">
+</form>
 <div id="root"></div>
 <script src="js/services-data.js"></script>
 <script src="js/Header.js"></script>

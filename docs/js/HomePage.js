@@ -495,8 +495,9 @@ function Locations() {
   );
 }
 
-var OE_FORM_ENDPOINT = 'https://api.web3forms.com/submit';
-var OE_FORM_KEY = 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01'; // Web3Forms public access key → delivers to the clinic inbox
+// Submissions go to Netlify Forms (same-origin POST — no third-party relay).
+// Netlify detects the hidden static form in index.html and emails + stores each submission.
+var OE_FORM_NAME = 'appointment-request';
 
 function AppointmentRequest() {
   var _this = this;
@@ -532,7 +533,7 @@ function AppointmentRequest() {
     };
   };
   var submit = function submit(e) {
-    var res, data;
+    var params, res;
     return regeneratorRuntime.async(function submit$(context$2$0) {
       while (1) switch (context$2$0.prev = context$2$0.next) {
         case 0:
@@ -549,59 +550,52 @@ function AppointmentRequest() {
           // bot honeypot
           setStatus('sending');
           context$2$0.prev = 4;
-          context$2$0.next = 7;
-          return regeneratorRuntime.awrap(fetch(OE_FORM_ENDPOINT, {
+          params = new URLSearchParams();
+
+          params.append('form-name', OE_FORM_NAME);
+          params.append('botcheck', form._honey);
+          params.append('Name', form.name);
+          params.append('Email Address', form.email || '(not provided)');
+          params.append('Phone', form.phone);
+          params.append('Are you a new patient?', form.patientType === 'New patient' ? 'Yes' : form.patientType === 'Returning patient' ? 'No' : '(not selected)');
+          params.append('Service', form.service || 'Other');
+          params.append('Preferred office', form.office || 'No preference');
+          params.append('Date', form.date || '(none given)');
+          params.append('Time', form.time || 'No preference');
+          params.append('Comments or Questions', form.message || '(none)');
+          context$2$0.next = 19;
+          return regeneratorRuntime.awrap(fetch('/', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-            body: JSON.stringify({
-              access_key: OE_FORM_KEY,
-              subject: 'appointment-lead: ' + form.name + ' — ' + (form.patientType || 'type not selected') + ' · ' + (form.date || 'no date given'),
-              from_name: 'Ohio Endocrinology Website',
-              botcheck: form._honey,
-              'Name': form.name,
-              'Email Address': form.email || '(not provided)',
-              'Phone': form.phone,
-              'Are you a new patient?': form.patientType === 'New patient' ? 'Yes' : form.patientType === 'Returning patient' ? 'No' : '(not selected)',
-              'Service': form.service || 'Other',
-              'Preferred office': form.office || 'No preference',
-              'Date': form.date || '(none given)',
-              'Time': form.time || 'No preference',
-              'Comments or Questions': form.message || '(none)',
-              email: form.email || undefined
-            })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params.toString()
           }));
 
-        case 7:
+        case 19:
           res = context$2$0.sent;
-          context$2$0.next = 10;
-          return regeneratorRuntime.awrap(res.json());
 
-        case 10:
-          data = context$2$0.sent;
-
-          if (!(!res.ok || !data.success)) {
-            context$2$0.next = 13;
+          if (res.ok) {
+            context$2$0.next = 22;
             break;
           }
 
           throw new Error('submit failed: ' + res.status);
 
-        case 13:
+        case 22:
           setStatus('sent');
-          context$2$0.next = 19;
+          context$2$0.next = 28;
           break;
 
-        case 16:
-          context$2$0.prev = 16;
+        case 25:
+          context$2$0.prev = 25;
           context$2$0.t0 = context$2$0['catch'](4);
 
           setStatus('error');
 
-        case 19:
+        case 28:
         case 'end':
           return context$2$0.stop();
       }
-    }, null, _this, [[4, 16]]);
+    }, null, _this, [[4, 25]]);
   };
   return React.createElement(
     Section,

@@ -244,8 +244,9 @@ function Locations() {
   );
 }
 
-const OE_FORM_ENDPOINT = 'https://api.web3forms.com/submit';
-const OE_FORM_KEY = 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01'; // Web3Forms public access key → delivers to the clinic inbox
+// Submissions go to Netlify Forms (same-origin POST — no third-party relay).
+// Netlify detects the hidden static form in index.html and emails + stores each submission.
+const OE_FORM_NAME = 'appointment-request';
 
 function AppointmentRequest() {
   const { SectionHeading, Button, Input, Select, Textarea, HipaaNotice, Alert } = OEHomeNS;
@@ -257,28 +258,24 @@ function AppointmentRequest() {
     if (form._honey) return; // bot honeypot
     setStatus('sending');
     try {
-      const res = await fetch(OE_FORM_ENDPOINT, {
+      const params = new URLSearchParams();
+      params.append('form-name', OE_FORM_NAME);
+      params.append('botcheck', form._honey);
+      params.append('Name', form.name);
+      params.append('Email Address', form.email || '(not provided)');
+      params.append('Phone', form.phone);
+      params.append('Are you a new patient?', form.patientType === 'New patient' ? 'Yes' : form.patientType === 'Returning patient' ? 'No' : '(not selected)');
+      params.append('Service', form.service || 'Other');
+      params.append('Preferred office', form.office || 'No preference');
+      params.append('Date', form.date || '(none given)');
+      params.append('Time', form.time || 'No preference');
+      params.append('Comments or Questions', form.message || '(none)');
+      const res = await fetch('/', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          access_key: OE_FORM_KEY,
-          subject: 'appointment-lead: ' + form.name + ' — ' + (form.patientType || 'type not selected') + ' · ' + (form.date || 'no date given'),
-          from_name: 'Ohio Endocrinology Website',
-          botcheck: form._honey,
-          'Name': form.name,
-          'Email Address': form.email || '(not provided)',
-          'Phone': form.phone,
-          'Are you a new patient?': form.patientType === 'New patient' ? 'Yes' : form.patientType === 'Returning patient' ? 'No' : '(not selected)',
-          'Service': form.service || 'Other',
-          'Preferred office': form.office || 'No preference',
-          'Date': form.date || '(none given)',
-          'Time': form.time || 'No preference',
-          'Comments or Questions': form.message || '(none)',
-          email: form.email || undefined,
-        }),
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
       });
-      const data = await res.json();
-      if (!res.ok || !data.success) throw new Error('submit failed: ' + res.status);
+      if (!res.ok) throw new Error('submit failed: ' + res.status);
       setStatus('sent');
     } catch (err) {
       setStatus('error');

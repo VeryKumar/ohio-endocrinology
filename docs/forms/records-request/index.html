@@ -27,6 +27,14 @@
   </div>
 </header>
 <main class="rf-wrap">
+  <!-- Netlify Forms detection template -->
+  <form name="records-request" data-netlify="true" netlify-honeypot="botcheck" hidden>
+    <input type="text" name="Full legal name"><input type="text" name="Date of birth">
+    <input type="text" name="Phone"><input type="text" name="Email">
+    <input type="text" name="What do you need?"><input type="text" name="Where should records go?">
+    <textarea name="Anything else about this request?"></textarea>
+    <input type="text" name="botcheck">
+  </form>
   <div class="rf-card">
     <div id="revado-form"></div>
   </div>
@@ -40,10 +48,8 @@
 <script>
 RevadoForm('revado-form', {
   name: 'Medical records request',
-  subjectPrefix: 'form-lead: records request',
+  formName: 'records-request',
   nameKey: 'fullName',
-  endpoint: 'https://api.web3forms.com/submit',
-  accessKey: 'fbfb1e2a-5f11-4318-ac1a-9bfff92c4e01',
   steps: [
     { title: 'Who you are', fields: [
       { key: 'fullName', label: 'Full legal name', type: 'text', required: true, autocomplete: 'name', half: true },
