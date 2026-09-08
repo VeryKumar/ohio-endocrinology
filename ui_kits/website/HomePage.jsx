@@ -165,7 +165,7 @@ function NewPatients() {
           </p>
         </div>
         <Alert variant="warning" title="Cancellation policy">
-          To avoid a $50 fee, please notify us at least 24 hours before your appointment to cancel or reschedule.
+          To avoid a $50 fee, please notify us at least 72 hours before your appointment to cancel or reschedule.
         </Alert>
       </div>
     </Section>

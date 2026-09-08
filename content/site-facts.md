@@ -41,7 +41,7 @@ Source: https://www.ohioendocrinology.com/ (Squarespace, "Keene" template), craw
 
 - **Patient portal / new-patient registration:** GlaceEMR — https://patientportal.glaceemr.com/glaceportal_login/UserRegistration?practiceId=eclinic&requestFor=UserRegistration
 - ⚠️ The "New Patient Form" (printable) link on the live site is an empty `href=""` — broken; ask client for the actual PDF.
-- **Cancellation policy:** "To avoid a $50 fee, notify us at least 24 hours prior to your appointment to cancel or reschedule."
+- **Cancellation policy:** "To avoid a $50 fee, notify us at least 72 hours prior to your appointment to cancel or reschedule."
 
 ## Providers
 
