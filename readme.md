@@ -85,3 +85,41 @@ Each directory has a `<Name>.jsx`, `<Name>.d.ts`, `<Name>.prompt.md`, and a `@ds
 ## Intentional additions
 - `FormField` — a shared label/hint/error wrapper extracted so `Input`/`Select`/`Textarea` stay consistent (the source described these patterns as `.mhb-form-*` rather than one component).
 - `Divider` — the standalone teal pill rule (`.mhb-divider`), also embedded in `SectionHeading`.
+
+## Lead SMS alerts (Netlify Forms → Twilio)
+
+Every verified form submission (`appointment-request`, `new-patient`, `records-request`) triggers
+`netlify/functions/submission-created.js`, which texts the leads manager via Twilio within seconds.
+The existing Netlify email notification to the practice inbox is unchanged and remains the full record.
+
+- Sender: +1 (440) 581-8825 (Elyria), part of the verified A2P 10DLC messaging service.
+- No npm dependencies; the function calls Twilio's REST API with `fetch`.
+- Spam/honeypot-flagged submissions never trigger the function (same as email).
+- Replies to the text are not seen by anyone; the message says "Do not reply" and includes the patient's phone.
+
+Configuration lives in Netlify environment variables (Site configuration → Environment variables):
+
+| Variable | Value |
+|---|---|
+| `TWILIO_ACCOUNT_SID` | Twilio account SID |
+| `TWILIO_AUTH_TOKEN` | Twilio auth token (secret) |
+| `TWILIO_MESSAGING_SERVICE_SID` | `MGc75f65340fba07c68d1992c650cb7591` |
+| `TWILIO_FROM` | `+14405818825` |
+| `LEADS_SMS_TO` | Recipient(s), E.164, comma-separated, e.g. `+14405551234,+12165551234` |
+| `SMS_DRY_RUN` | Optional. `1` logs the text instead of sending. |
+
+To change who receives the texts: `npx --yes netlify-cli env:set LEADS_SMS_TO "+1XXXXXXXXXX"` then redeploy
+(env changes reach functions on the next deploy).
+
+Local dry run (no SMS sent):
+
+```
+SMS_DRY_RUN=1 LEADS_SMS_TO=+10000000000 node -e '
+const { handler } = require("./netlify/functions/submission-created.js");
+handler({ body: JSON.stringify({ payload: { form_name: "appointment-request", number: 1,
+  data: { Name: "Test Ignore", Phone: "4405551234", "Are you a new patient?": "Yes", Service: "Thyroid" } } }) })
+  .then(r => console.log(r.statusCode));'
+```
+
+Live check: `npx --yes netlify-cli logs:function submission-created`, then submit a form on the site with the name
+"TEST ignore". Delete the test submission afterwards in Netlify → Forms.
