@@ -10,7 +10,7 @@
 // No npm dependencies: uses the Node runtime's global fetch and Twilio's REST API.
 
 const TIMEOUT_MS = 6000; // Netlify sync function cap is 10s
-const MAX_BODY = 600;    // ~4 GSM-7 segments
+const MAX_BODY = 400;    // ~6 UCS-2 segments (header emoji forces UCS-2)
 const FOOTER = 'Full details in email. Do not reply.';
 
 exports.handler = async (event) => {
@@ -78,13 +78,16 @@ const SKIP_KEYS = new Set(['ip', 'user_agent', 'referrer', 'botcheck']);
 function buildBody(formName, number, d) {
   const g = (k) => clean(d[k]);
   const tagged = (label, v) => (v ? label + ': ' + v : '');
-  const head = 'OE lead' + (number ? ' #' + number : '') + ': ';
+  const num = number ? ' #' + number : '';
+  // One emoji in the header only (rest stays ASCII) so lead texts stand out from other alerts.
+  const EMOJI = { 'appointment-request': '\u{1FA7A}', 'new-patient': '\u{1F195}', 'records-request': '\u{1F4C1}' };
+  const head = (EMOJI[formName] || '\u{1F4E8}') + ' ';
   let lines;
   let longKey = null; // the free-text line that gets truncated first
 
   if (formName === 'appointment-request') {
     lines = [
-      head + 'Appt request',
+      head + 'Appt request' + num,
       g('Name'),
       phone(g('Phone')),
       tagged('New pt', g('Are you a new patient?')),
@@ -95,7 +98,7 @@ function buildBody(formName, number, d) {
     longKey = 6;
   } else if (formName === 'new-patient') {
     lines = [
-      head + 'New patient form',
+      head + 'New patient form' + num,
       g('Full legal name'),
       phone(g('Phone')),
       tagged('Seen before', g('Have you been seen by us before?')),
@@ -106,7 +109,7 @@ function buildBody(formName, number, d) {
     ];
   } else if (formName === 'records-request') {
     lines = [
-      head + 'Records request',
+      head + 'Records request' + num,
       g('Full legal name'),
       phone(g('Phone')),
       tagged('Needs', g('What do you need?')),
@@ -115,7 +118,7 @@ function buildBody(formName, number, d) {
     ];
     longKey = 5;
   } else {
-    lines = [head + formName];
+    lines = [head + formName + num];
     Object.keys(d).forEach((k) => {
       if (SKIP_KEYS.has(k)) return;
       const v = clean(d[k]);
@@ -139,11 +142,11 @@ function phone(v) {
   return v || '';
 }
 
-// Keep to plain ASCII so carriers use GSM-7 (153-char segments, not 67-char UCS-2),
-// then shorten the free-text line first, then the tail, to stay under MAX_BODY.
+// The header emoji forces UCS-2 encoding (67-char segments), so keep everything else
+// plain ASCII and shorten the free-text line first, then the tail, to stay under MAX_BODY.
 function fit(lines, longKey, footer, max) {
   const ascii = (s) => s.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/[–—]/g, '-').replace(/[^\x20-\x7E\n]/g, '');
-  const assemble = () => ascii(lines.filter(Boolean).concat(footer).join('\n'));
+  const assemble = () => [lines[0]].concat(lines.slice(1).filter(Boolean), footer).map((l, i) => (i === 0 ? l : ascii(l))).join('\n');
   let out = assemble();
   if (out.length > max && longKey != null && lines[longKey]) {
     const over = out.length - max;
