@@ -89,7 +89,7 @@ function buildBody(formName, number, d) {
     lines = [
       head + 'Appt request' + num,
       g('Name'),
-      phone(g('Phone')),
+      tagged('Ph', phone(g('Phone'))),
       g('Email Address'),
       tagged('New pt', g('Are you a new patient?')),
       tagged('Service', g('Service')),
@@ -101,7 +101,7 @@ function buildBody(formName, number, d) {
     lines = [
       head + 'New patient form' + num,
       g('Full legal name'),
-      phone(g('Phone')),
+      tagged('Ph', phone(g('Phone'))),
       g('Email'),
       tagged('Seen before', g('Have you been seen by us before?')),
       join([tagged('Office', g('Preferred office')), tagged('Time', g('Preferred appointment time'))]),
@@ -113,7 +113,7 @@ function buildBody(formName, number, d) {
     lines = [
       head + 'Records request' + num,
       g('Full legal name'),
-      phone(g('Phone')),
+      tagged('Ph', phone(g('Phone'))),
       g('Email'),
       tagged('Needs', g('What do you need?')),
       tagged('Send to', g('Where should records go?')),
