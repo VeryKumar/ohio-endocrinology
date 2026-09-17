@@ -90,17 +90,19 @@ function buildBody(formName, number, d) {
       head + 'Appt request' + num,
       g('Name'),
       phone(g('Phone')),
+      g('Email Address'),
       tagged('New pt', g('Are you a new patient?')),
       tagged('Service', g('Service')),
       join([tagged('Office', g('Preferred office')), tagged('Date', g('Date')), tagged('Time', g('Time'))]),
       tagged('Comments', g('Comments or Questions')),
     ];
-    longKey = 6;
+    longKey = 7;
   } else if (formName === 'new-patient') {
     lines = [
       head + 'New patient form' + num,
       g('Full legal name'),
       phone(g('Phone')),
+      g('Email'),
       tagged('Seen before', g('Have you been seen by us before?')),
       join([tagged('Office', g('Preferred office')), tagged('Time', g('Preferred appointment time'))]),
       tagged('Insurance', g('Insurance company')),
@@ -112,11 +114,12 @@ function buildBody(formName, number, d) {
       head + 'Records request' + num,
       g('Full legal name'),
       phone(g('Phone')),
+      g('Email'),
       tagged('Needs', g('What do you need?')),
       tagged('Send to', g('Where should records go?')),
       tagged('Notes', g('Anything else about this request?')),
     ];
-    longKey = 5;
+    longKey = 6;
   } else {
     lines = [head + formName + num];
     Object.keys(d).forEach((k) => {
